@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ECU Cybersecurity Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+</head>
+
+<body>
+
+<div class="dash">
+
+  <h2>ECU Cybersecurity Dashboard</h2>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview', this)">Overview</button>
+    <button class="tab" onclick="switchTab('cve', this)">CVE Registry</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="tab-overview" class="panel active">
+    <div class="card">
+      <h3>Severity Distribution</h3>
+      <canvas id="chart-sev"></canvas>
+    </div>
+  </div>
+
+  <!-- CVE TABLE -->
+  <div id="tab-cve" class="panel">
+    <input id="cve-search" placeholder="Search CVE..." />
+
+    <table class="cve-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Description</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody id="cve-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

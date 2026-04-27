@@ -1,0 +1,58 @@
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: #e5e7eb;
+  margin: 0;
+  padding: 20px;
+}
+
+.card {
+  background: #111827;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.tabs {
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 16px;
+  cursor: pointer;
+  color: #9ca3af;
+  border: none;
+  background: none;
+}
+
+.tab.active {
+  color: white;
+  border-bottom: 2px solid orange;
+}
+
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+}
+
+.cve-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cve-table th, .cve-table td {
+  padding: 10px;
+  border-bottom: 1px solid #1f2937;
+}
+
+.cve-table tr:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+}
