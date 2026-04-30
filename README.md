@@ -34,8 +34,10 @@ automotive-cyber-dashboard/
 ├── data/
 │   ├── cves.json              # refreshed by GitHub Action
 │   ├── ecu_components.json    # OEM -> supplier / ECU / keyword map (editable)
-│   └── compliance_map.json    # category -> standard clause map (editable)
+│   ├── compliance_map.json    # category -> standard clause map (editable)
+│   └── health.json            # API key + fetch status (drives the dashboard pill)
 ├── scripts/
+│   ├── check_key.py           # validates NVD_API_KEY, writes health.json
 │   └── fetch_nvd.py
 ├── .github/workflows/
 │   └── refresh-data.yml       # daily cron, uses NVD_API_KEY secret
@@ -86,8 +88,25 @@ https://<your-username>.github.io/automotive-cyber-dashboard/
 ### 5. Trigger the first data refresh
 
 - Go to **Actions** → **Refresh NVD data** → **Run workflow**.
-- The Action pulls CVEs, normalizes them, and commits `data/cves.json` to `main`. The dashboard picks up the new data on next page load.
+- The Action **first validates your API key** (`scripts/check_key.py`), then pulls CVEs (`scripts/fetch_nvd.py`), and commits `data/cves.json` and `data/health.json` to `main`. The dashboard picks up new data on next page load.
 - Subsequent runs happen automatically every day at 03:00 UTC.
+
+### Health pill on the dashboard
+
+The top-right of the dashboard shows a status pill driven by `data/health.json`:
+
+| Pill colour | Meaning |
+| --- | --- |
+| Green &mdash; **API key OK** | Last validation passed and data refreshed within the last 2 days. |
+| Yellow &mdash; **Data stale** / **Fetch skipped** | Key worked but data hasn't refreshed recently, or fetch was skipped. |
+| Red &mdash; **API key invalid / missing** or **Last fetch failed** | The Action couldn't authenticate or the fetch step errored. |
+| Grey &mdash; **Health-check pending** | The validation workflow hasn't run yet (true on first deploy). |
+
+Click the pill for a popover with the exact NVD HTTP response, rate-limit ceiling, last-run timestamp, and fetch outcome.
+
+If the pill is red:
+1. Open the **Actions** tab → most recent run → **Validate NVD API key** step. The log shows the exact reason.
+2. If you registered for an NVD key but never clicked the activation email, the key is technically valid but rate-limited to 5/30s &mdash; activate it and re-run the workflow.
 
 ---
 

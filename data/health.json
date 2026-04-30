@@ -1,0 +1,15 @@
+{
+  "checked_at": null,
+  "key": {
+    "status": "unknown",
+    "message": "Health check has not run yet. Trigger the 'Refresh NVD data' workflow on GitHub to populate this file.",
+    "rate_limit": null,
+    "http_status": null
+  },
+  "fetch": {
+    "status": "never_run",
+    "ran_at": null,
+    "cve_count": null,
+    "message": "Fetch has not run yet."
+  }
+}

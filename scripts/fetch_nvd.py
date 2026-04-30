@@ -36,6 +36,33 @@ SLEEP_BETWEEN_CALLS = 0.7  # NVD allows 50 req / 30s with API key; this stays we
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
+HEALTH_FILE = DATA_DIR / "health.json"
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def update_fetch_health(status: str, message: str, cve_count: int | None = None) -> None:
+    """Merge fetch outcome into data/health.json without clobbering the key block."""
+    existing: dict[str, Any] = {}
+    if HEALTH_FILE.exists():
+        try:
+            existing = json.loads(HEALTH_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            existing = {}
+    existing.setdefault("key", {"status": "unknown", "message": "", "rate_limit": None, "http_status": None})
+    existing["fetch"] = {
+        "status": status,
+        "ran_at": _now_iso(),
+        "cve_count": cve_count,
+        "message": message,
+    }
+    existing.setdefault("checked_at", _now_iso())
+    HEALTH_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with HEALTH_FILE.open("w", encoding="utf-8") as f:
+        json.dump(existing, f, indent=2, ensure_ascii=False)
+        f.write("\n")
 
 
 def log(msg: str) -> None:
@@ -175,6 +202,7 @@ def main() -> int:
     api_key = os.environ.get("NVD_API_KEY", "").strip()
     if not api_key:
         log("ERROR: NVD_API_KEY env var is empty. Set it as a GitHub Actions secret or local env var.")
+        update_fetch_health("failed", "NVD_API_KEY env var is empty.")
         return 2
 
     ecu_map = load_json(DATA_DIR / "ecu_components.json")
@@ -242,8 +270,17 @@ def main() -> int:
     }
     save_json(DATA_DIR / "cves.json", payload)
     log(f"wrote {len(cves)} CVEs to data/cves.json")
+    update_fetch_health("ok", f"Fetched {len(cves)} CVEs across {LOOKBACK_DAYS}-day window.", cve_count=len(cves))
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as exc:
+        log(f"FATAL: {exc}")
+        try:
+            update_fetch_health("failed", f"Unhandled error: {exc}")
+        except Exception:
+            pass
+        raise

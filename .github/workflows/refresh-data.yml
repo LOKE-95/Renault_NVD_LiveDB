@@ -1,0 +1,86 @@
+name: Refresh NVD data
+
+on:
+  schedule:
+    # Daily at 03:00 UTC
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "How many days of NVD history to pull"
+        required: false
+        default: "365"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate NVD API key
+        id: validate
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: python scripts/check_key.py
+        continue-on-error: true
+
+      - name: Fetch NVD CVEs
+        if: steps.validate.outcome == 'success'
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          NVD_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '365' }}
+        run: python scripts/fetch_nvd.py
+
+      - name: Mark fetch as skipped (key invalid)
+        if: steps.validate.outcome != 'success'
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          path = "data/health.json"
+          try:
+              data = json.load(open(path))
+          except Exception:
+              data = {}
+          data.setdefault("key", {"status": "unknown"})
+          data["fetch"] = {
+              "status": "skipped",
+              "ran_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "cve_count": (data.get("fetch") or {}).get("cve_count"),
+              "message": "Fetch skipped because the API key validation failed."
+          }
+          json.dump(data, open(path, "w"), indent=2)
+          open(path, "a").write("\n")
+          PY
+
+      - name: Commit updated data
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/health.json data/cves.json 2>/dev/null || true
+          if [ -n "$(git status --porcelain data/health.json data/cves.json)" ]; then
+            git commit -m "chore(data): refresh NVD snapshot + health status"
+            git push
+          else
+            echo "No changes to commit."
+          fi
+
+      - name: Fail job if key was invalid
+        if: steps.validate.outcome != 'success'
+        run: |
+          echo "::error::NVD API key validation failed. See data/health.json for details."
+          exit 1

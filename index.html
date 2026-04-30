@@ -17,7 +17,13 @@
       </div>
     </div>
     <div class="meta">
+      <span class="health-pill" id="health-pill" data-status="unknown" title="Loading status&hellip;">
+        <span class="health-dot"></span>
+        <span class="health-label" id="health-label">Status: loading</span>
+      </span>
       <span id="last-updated">Loading&hellip;</span>
+      <span class="kbd-hint">Press <kbd>/</kbd> to search</span>
+      <div class="health-popover" id="health-popover" hidden></div>
     </div>
   </header>
 
@@ -28,11 +34,34 @@
     <button class="chip" data-oem="maruti_suzuki">Maruti Suzuki</button>
   </nav>
 
+  <!-- Active filter chips bar (drill-downs from clicks) -->
+  <div class="active-filters" id="active-filters" hidden>
+    <span class="active-filters-label">Active filters:</span>
+    <span id="active-filter-chips"></span>
+    <button class="clear-all" id="clear-filters">Clear all</button>
+  </div>
+
   <section class="kpis" id="kpis">
-    <div class="kpi"><span class="kpi-label">Total CVEs</span><span class="kpi-value" id="kpi-total">&mdash;</span></div>
-    <div class="kpi critical"><span class="kpi-label">Critical</span><span class="kpi-value" id="kpi-critical">&mdash;</span></div>
-    <div class="kpi high"><span class="kpi-label">High</span><span class="kpi-value" id="kpi-high">&mdash;</span></div>
-    <div class="kpi"><span class="kpi-label">Avg CVSS</span><span class="kpi-value" id="kpi-avg">&mdash;</span></div>
+    <div class="kpi">
+      <span class="kpi-label">Total CVEs</span>
+      <span class="kpi-value" id="kpi-total">&mdash;</span>
+      <canvas class="sparkline" id="spark-total"></canvas>
+    </div>
+    <div class="kpi critical">
+      <span class="kpi-label">Critical</span>
+      <span class="kpi-value" id="kpi-critical">&mdash;</span>
+      <canvas class="sparkline" id="spark-critical"></canvas>
+    </div>
+    <div class="kpi high">
+      <span class="kpi-label">High</span>
+      <span class="kpi-value" id="kpi-high">&mdash;</span>
+      <canvas class="sparkline" id="spark-high"></canvas>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">Avg CVSS</span>
+      <span class="kpi-value" id="kpi-avg">&mdash;</span>
+      <span class="kpi-sub" id="kpi-avg-trend"></span>
+    </div>
   </section>
 
   <nav class="tabs" id="tabs">
@@ -43,28 +72,63 @@
   </nav>
 
   <main>
-    <!-- Overview tab -->
+    <!-- ============== OVERVIEW TAB ============== -->
     <section class="tab-panel active" id="panel-overview">
-      <div class="grid charts">
-        <div class="card">
-          <h3>Severity distribution</h3>
-          <canvas id="chart-severity"></canvas>
+
+      <!-- Risk heatmap -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Risk heatmap &mdash; OEM &times; ECU class</h3>
+          <span class="card-hint">Cell color = highest CVSS in that combo &middot; click to drill</span>
         </div>
+        <div class="heatmap-wrap" id="heatmap"></div>
+      </div>
+
+      <div class="grid two-col">
+        <!-- Top concerns -->
         <div class="card">
-          <h3>CVEs over time</h3>
+          <div class="card-header">
+            <h3>Top concerns</h3>
+            <span class="card-hint">Ranked by severity, recency, and OEM spread</span>
+          </div>
+          <div id="top-concerns" class="concerns-list"></div>
+        </div>
+
+        <!-- OEM comparison -->
+        <div class="card">
+          <div class="card-header">
+            <h3>OEM comparison</h3>
+            <span class="card-hint">CVEs by severity &middot; click bar segment to filter</span>
+          </div>
+          <canvas id="chart-oem-compare"></canvas>
+        </div>
+      </div>
+
+      <div class="grid two-col">
+        <!-- Stacked severity trend -->
+        <div class="card">
+          <div class="card-header">
+            <h3>CVE volume over time</h3>
+            <span class="card-hint">Stacked by severity</span>
+          </div>
           <canvas id="chart-trend"></canvas>
         </div>
-        <div class="card wide">
-          <h3>Top affected components</h3>
+
+        <!-- Top components -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Top affected components</h3>
+            <span class="card-hint">Click bar to filter</span>
+          </div>
           <canvas id="chart-components"></canvas>
         </div>
       </div>
     </section>
 
-    <!-- CVE table tab -->
+    <!-- ============== CVE TABLE TAB ============== -->
     <section class="tab-panel" id="panel-cves">
       <div class="filter-bar">
-        <input type="search" id="cve-search" placeholder="Search CVE ID, description, component&hellip;" />
+        <input type="search" id="cve-search" placeholder="Search CVE ID, description, component&hellip; (press /)" />
         <select id="filter-severity">
           <option value="all">All severities</option>
           <option value="CRITICAL">Critical</option>
@@ -78,13 +142,14 @@
         <span class="result-count" id="cve-count"></span>
       </div>
       <div class="table-wrap">
-        <table class="cve-table">
+        <table class="cve-table" id="cve-table">
           <thead>
             <tr>
-              <th>CVE</th>
-              <th>Sev</th>
-              <th>CVSS</th>
-              <th>Published</th>
+              <th></th>
+              <th data-sort="id">CVE</th>
+              <th data-sort="severity">Sev</th>
+              <th data-sort="cvss">CVSS</th>
+              <th data-sort="published">Published</th>
               <th>OEMs</th>
               <th>ECU</th>
               <th>Components</th>
@@ -93,15 +158,19 @@
           </thead>
           <tbody id="cve-tbody"></tbody>
         </table>
+        <div class="empty-state" id="cve-empty" hidden>
+          <p>No CVEs match the current filters.</p>
+          <button class="btn" id="cve-empty-clear">Clear filters</button>
+        </div>
       </div>
     </section>
 
-    <!-- ECU breakdown tab -->
+    <!-- ============== ECU BREAKDOWN TAB ============== -->
     <section class="tab-panel" id="panel-ecu">
       <div id="ecu-breakdown"></div>
     </section>
 
-    <!-- Compliance tab -->
+    <!-- ============== COMPLIANCE MATRIX TAB ============== -->
     <section class="tab-panel" id="panel-compliance">
       <div id="compliance-content"></div>
     </section>
@@ -114,6 +183,12 @@
       &middot; <a href="https://github.com/" target="_blank" rel="noreferrer">Source on GitHub</a>
     </p>
   </footer>
+
+  <!-- Loading skeleton overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading dashboard data&hellip;</p>
+  </div>
 
   <script src="assets/js/dashboard.js" type="module"></script>
 </body>
