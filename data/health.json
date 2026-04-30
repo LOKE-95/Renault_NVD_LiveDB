@@ -1,15 +1,15 @@
 {
-  "checked_at": null,
+  "checked_at": "2026-04-30T05:00:05Z",
   "key": {
-    "status": "unknown",
-    "message": "Health check has not run yet. Trigger the 'Refresh NVD data' workflow on GitHub to populate this file.",
+    "status": "valid",
+    "message": "Key accepted by NVD. NVD reports 347,252 total CVEs.",
     "rate_limit": null,
-    "http_status": null
+    "http_status": 200
   },
   "fetch": {
-    "status": "never_run",
-    "ran_at": null,
-    "cve_count": null,
-    "message": "Fetch has not run yet."
+    "status": "ok",
+    "ran_at": "2026-04-30T05:03:47Z",
+    "cve_count": 628,
+    "message": "Fetched 628 CVEs across 365-day window."
   }
 }
