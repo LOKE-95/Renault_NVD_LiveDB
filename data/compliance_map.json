@@ -1,0 +1,147 @@
+{
+  "standards": {
+    "iso_21434": {
+      "name": "ISO/SAE 21434",
+      "clauses": {
+        "8":  "Continual cybersecurity activities",
+        "9":  "Concept",
+        "10": "Product development",
+        "11": "Cybersecurity validation",
+        "12": "Production",
+        "13": "Operations and maintenance",
+        "14": "Decommissioning",
+        "15": "Threat analysis and risk assessment (TARA)"
+      }
+    },
+    "un_r155": {
+      "name": "UN R155 (CSMS)",
+      "clauses": {
+        "7.2":   "Cybersecurity Management System (CSMS) requirements",
+        "7.3":   "Vehicle type approval requirements",
+        "A5-4.3.1": "Annex 5 - Threats to back-end servers",
+        "A5-4.3.2": "Annex 5 - Threats via communication channels",
+        "A5-4.3.3": "Annex 5 - Threats to update procedures",
+        "A5-4.3.4": "Annex 5 - Unintended human actions",
+        "A5-4.3.5": "Annex 5 - External connectivity / connections",
+        "A5-4.3.6": "Annex 5 - Threats to vehicle data / code",
+        "A5-4.3.7": "Annex 5 - Potential vulnerabilities exploited"
+      }
+    },
+    "un_r156": {
+      "name": "UN R156 (SUMS)",
+      "clauses": {
+        "7.1": "Software Update Management System (SUMS)",
+        "7.2": "Vehicle type approval - software updates",
+        "RxSWIN": "Regulation X Software Identification Number"
+      }
+    },
+    "ais_189": {
+      "name": "AIS-189 (India)",
+      "clauses": {
+        "CSMS": "Cybersecurity Management System (aligned with UN R155)",
+        "SUMS": "Software Update Management System (aligned with UN R156)",
+        "TYPE-APPROVAL": "Vehicle type approval - cybersecurity"
+      }
+    }
+  },
+  "categories": [
+    {
+      "id": "ota_update",
+      "label": "OTA / software update",
+      "match": {
+        "keywords": ["ota", "firmware update", "software update", "sums", "rxswin", "update server"],
+        "cwe": ["CWE-494", "CWE-345"]
+      },
+      "clauses": {
+        "iso_21434": ["10", "13", "15"],
+        "un_r155":   ["A5-4.3.3"],
+        "un_r156":   ["7.1", "7.2", "RxSWIN"],
+        "ais_189":   ["SUMS", "TYPE-APPROVAL"]
+      }
+    },
+    {
+      "id": "in_vehicle_network",
+      "label": "In-vehicle network (CAN / LIN / Ethernet / SOME-IP)",
+      "match": {
+        "keywords": ["can bus", "can-fd", "lin", "flexray", "automotive ethernet", "some/ip", "doip", "uds"],
+        "cwe": ["CWE-306", "CWE-285"]
+      },
+      "clauses": {
+        "iso_21434": ["10", "15"],
+        "un_r155":   ["A5-4.3.6", "A5-4.3.7"],
+        "un_r156":   [],
+        "ais_189":   ["CSMS"]
+      }
+    },
+    {
+      "id": "wireless_connectivity",
+      "label": "Wireless / external connectivity (Bluetooth, Wi-Fi, cellular)",
+      "match": {
+        "keywords": ["bluetooth", "ble", "wi-fi", "wifi", "wpa", "lte", "5g", "modem", "v2x"],
+        "cwe": ["CWE-287", "CWE-319"]
+      },
+      "clauses": {
+        "iso_21434": ["10", "11", "15"],
+        "un_r155":   ["A5-4.3.2", "A5-4.3.5"],
+        "un_r156":   [],
+        "ais_189":   ["CSMS"]
+      }
+    },
+    {
+      "id": "infotainment_os",
+      "label": "Infotainment OS / userland (Android Automotive, Linux, Qt, WebKit)",
+      "match": {
+        "keywords": ["android", "linux kernel", "webkit", "qt", "ffmpeg", "media", "browser"],
+        "cwe": ["CWE-119", "CWE-787", "CWE-416"]
+      },
+      "clauses": {
+        "iso_21434": ["10", "13"],
+        "un_r155":   ["A5-4.3.6", "A5-4.3.7"],
+        "un_r156":   [],
+        "ais_189":   ["CSMS"]
+      }
+    },
+    {
+      "id": "backend_servers",
+      "label": "Telematics back-end / cloud",
+      "match": {
+        "keywords": ["mqtt", "rest api", "back-end", "backend", "cloud", "telematics server", "fleet"],
+        "cwe": ["CWE-287", "CWE-200"]
+      },
+      "clauses": {
+        "iso_21434": ["8", "13", "15"],
+        "un_r155":   ["A5-4.3.1"],
+        "un_r156":   [],
+        "ais_189":   ["CSMS"]
+      }
+    },
+    {
+      "id": "crypto_tls",
+      "label": "Cryptography / TLS / key management",
+      "match": {
+        "keywords": ["openssl", "tls", "ssl", "x.509", "cipher", "key management", "hsm", "secure boot"],
+        "cwe": ["CWE-327", "CWE-310", "CWE-321"]
+      },
+      "clauses": {
+        "iso_21434": ["10", "11", "15"],
+        "un_r155":   ["A5-4.3.6", "A5-4.3.7"],
+        "un_r156":   ["7.1"],
+        "ais_189":   ["CSMS", "SUMS"]
+      }
+    },
+    {
+      "id": "supply_chain",
+      "label": "Supply chain / third-party components",
+      "match": {
+        "keywords": ["supply chain", "third party", "third-party", "library", "open source"],
+        "cwe": ["CWE-1357", "CWE-829"]
+      },
+      "clauses": {
+        "iso_21434": ["8", "10", "13"],
+        "un_r155":   ["7.2"],
+        "un_r156":   ["7.1"],
+        "ais_189":   ["CSMS"]
+      }
+    }
+  ]
+}

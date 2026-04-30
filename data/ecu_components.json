@@ -1,0 +1,138 @@
+{
+  "renault": {
+    "display_name": "Renault",
+    "keywords": [
+      "renault",
+      "easy link",
+      "easylink",
+      "openr link",
+      "r-link",
+      "renault software factory",
+      "alliance ventures"
+    ],
+    "suppliers": [
+      "Continental",
+      "LG Electronics",
+      "Harman",
+      "Valeo",
+      "Bosch",
+      "Aptiv",
+      "Vector"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / IVI",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Qt"]
+      },
+      "telematics": {
+        "label": "Telematics / TCU",
+        "components": ["LTE/4G modem", "MQTT", "OpenSSL", "TLS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "AUTOSAR Adaptive", "SOME/IP", "DoIP"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS",
+        "components": ["camera ECU", "radar ECU", "Mobileye"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "motor controller"]
+      }
+    }
+  },
+  "mahindra": {
+    "display_name": "Mahindra",
+    "keywords": [
+      "mahindra",
+      "mahindra electric",
+      "xuv700",
+      "adrenox",
+      "mahindra xuv"
+    ],
+    "suppliers": [
+      "Visteon",
+      "Bosch",
+      "Continental",
+      "Harman",
+      "Tata Elxsi",
+      "KPIT",
+      "L&T Technology Services"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / AdrenoX",
+        "components": ["Android Automotive", "Linux kernel", "Qt", "Bluetooth", "Wi-Fi"]
+      },
+      "telematics": {
+        "label": "Telematics / TCU",
+        "components": ["MQTT", "OpenSSL", "TLS", "LTE modem"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "SOME/IP", "DoIP", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS",
+        "components": ["camera ECU", "radar ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "VCU"]
+      }
+    }
+  },
+  "maruti_suzuki": {
+    "display_name": "Maruti Suzuki",
+    "keywords": [
+      "maruti",
+      "maruti suzuki",
+      "suzuki",
+      "smartplay",
+      "suzuki connect"
+    ],
+    "suppliers": [
+      "Denso",
+      "Harman",
+      "Bosch",
+      "Continental",
+      "Panasonic",
+      "Mitsubishi Electric"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / SmartPlay",
+        "components": ["Android Automotive", "Android Auto", "Apple CarPlay", "Bluetooth", "Wi-Fi"]
+      },
+      "telematics": {
+        "label": "Telematics / Suzuki Connect",
+        "components": ["LTE modem", "MQTT", "OpenSSL", "TLS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "CAN", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / Suzuki Safety Support",
+        "components": ["camera ECU", "radar ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain",
+        "components": ["ECM", "TCM", "hybrid ECU"]
+      }
+    }
+  }
+}

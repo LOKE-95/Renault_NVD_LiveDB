@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automotive Cybersecurity Dashboard</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">VEH</span>
+      <div>
+        <h1>Automotive Cybersecurity Dashboard</h1>
+        <p class="subtitle">NVD CVE intelligence &middot; ECU &amp; software components &middot; ISO 21434 / UN R155 / R156 / AIS-189</p>
+      </div>
+    </div>
+    <div class="meta">
+      <span id="last-updated">Loading&hellip;</span>
+    </div>
+  </header>
+
+  <nav class="oem-filter" id="oem-filter">
+    <button class="chip active" data-oem="all">All OEMs</button>
+    <button class="chip" data-oem="renault">Renault</button>
+    <button class="chip" data-oem="mahindra">Mahindra</button>
+    <button class="chip" data-oem="maruti_suzuki">Maruti Suzuki</button>
+  </nav>
+
+  <section class="kpis" id="kpis">
+    <div class="kpi"><span class="kpi-label">Total CVEs</span><span class="kpi-value" id="kpi-total">&mdash;</span></div>
+    <div class="kpi critical"><span class="kpi-label">Critical</span><span class="kpi-value" id="kpi-critical">&mdash;</span></div>
+    <div class="kpi high"><span class="kpi-label">High</span><span class="kpi-value" id="kpi-high">&mdash;</span></div>
+    <div class="kpi"><span class="kpi-label">Avg CVSS</span><span class="kpi-value" id="kpi-avg">&mdash;</span></div>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="cves">CVE table</button>
+    <button class="tab" data-tab="ecu">ECU / component breakdown</button>
+    <button class="tab" data-tab="compliance">Compliance matrix</button>
+  </nav>
+
+  <main>
+    <!-- Overview tab -->
+    <section class="tab-panel active" id="panel-overview">
+      <div class="grid charts">
+        <div class="card">
+          <h3>Severity distribution</h3>
+          <canvas id="chart-severity"></canvas>
+        </div>
+        <div class="card">
+          <h3>CVEs over time</h3>
+          <canvas id="chart-trend"></canvas>
+        </div>
+        <div class="card wide">
+          <h3>Top affected components</h3>
+          <canvas id="chart-components"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- CVE table tab -->
+    <section class="tab-panel" id="panel-cves">
+      <div class="filter-bar">
+        <input type="search" id="cve-search" placeholder="Search CVE ID, description, component&hellip;" />
+        <select id="filter-severity">
+          <option value="all">All severities</option>
+          <option value="CRITICAL">Critical</option>
+          <option value="HIGH">High</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="LOW">Low</option>
+        </select>
+        <select id="filter-ecu">
+          <option value="all">All ECU classes</option>
+        </select>
+        <span class="result-count" id="cve-count"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="cve-table">
+          <thead>
+            <tr>
+              <th>CVE</th>
+              <th>Sev</th>
+              <th>CVSS</th>
+              <th>Published</th>
+              <th>OEMs</th>
+              <th>ECU</th>
+              <th>Components</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="cve-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ECU breakdown tab -->
+    <section class="tab-panel" id="panel-ecu">
+      <div id="ecu-breakdown"></div>
+    </section>
+
+    <!-- Compliance tab -->
+    <section class="tab-panel" id="panel-compliance">
+      <div id="compliance-content"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Data: <a href="https://nvd.nist.gov/" target="_blank" rel="noreferrer">NVD CVE 2.0</a>
+      &middot; Standards referenced for educational use only
+      &middot; <a href="https://github.com/" target="_blank" rel="noreferrer">Source on GitHub</a>
+    </p>
+  </footer>
+
+  <script src="assets/js/dashboard.js" type="module"></script>
+</body>
+</html>
