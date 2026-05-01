@@ -1,9 +1,31 @@
 {
-  "generated_at": "2026-04-30T05:03:47Z",
+  "generated_at": "2026-05-01T06:22:46Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
   "count": 628,
   "cves": [
+    {
+      "id": "CVE-2025-14576",
+      "published": "2026-04-30",
+      "modified": "2026-04-30",
+      "cvss": null,
+      "severity": "UNKNOWN",
+      "description": "Insufficient validation of node IDs in Qt SVG module allows arbitrary QML/JavaScript code injection when loading malicious SVG files through the VectorImage component in Qt Quick. While QML execution is typically more restricted than native code execution, this could still lead to denial of service, information disclosure, or other impacts depending on the application's privilege level and data access.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "infotainment",
+      "components": [
+        "Qt"
+      ],
+      "categories": [
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-14576"
+    },
     {
       "id": "CVE-2026-40967",
       "published": "2026-04-28",
@@ -3999,9 +4021,9 @@
     {
       "id": "CVE-2026-1875",
       "published": "2026-03-03",
-      "modified": "2026-04-24",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-04-30",
+      "cvss": 7.5,
+      "severity": "HIGH",
       "description": "Improper Resource Shutdown or Release vulnerability in Mitsubishi Electric Corporation MELSEC iQ-F Series FX5-EIP EtherNet/IP Module FX5-EIP versions 1.000 and prior allows a remote attacker to cause a denial-of-service (DoS) condition on the products by continuously sending UDP packets to the products. A system reset of the product is required for recovery.",
       "matched_oems": [
         "maruti_suzuki"
@@ -4017,9 +4039,9 @@
     {
       "id": "CVE-2026-1876",
       "published": "2026-03-03",
-      "modified": "2026-03-04",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-04-30",
+      "cvss": 7.5,
+      "severity": "HIGH",
       "description": "Improper Resource Shutdown or Release vulnerability in Mitsubishi Electric Corporation MELSEC iQ-F Series FX5-ENET/IP Ethernet Module FX5-ENET/IP all versions allows a remote attacker to cause a denial-of-service (DoS) condition on the products by continuously sending UDP packets to the products. A system reset of the product is required for recovery.",
       "matched_oems": [
         "maruti_suzuki"
@@ -13653,24 +13675,6 @@
       "components": [],
       "categories": [],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-46632"
-    },
-    {
-      "id": "CVE-2024-30145",
-      "published": "2025-04-30",
-      "modified": "2025-11-07",
-      "cvss": 6.5,
-      "severity": "MEDIUM",
-      "description": "Multiple vectors in HCL Domino Volt and Domino Leap allow client-side\nscript injection in the authoring environment and deployed applications.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": null,
-      "components": [],
-      "categories": [],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-30145"
     }
   ]
 }
