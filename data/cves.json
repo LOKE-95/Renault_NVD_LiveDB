@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-03T06:12:15Z",
+  "generated_at": "2026-05-04T06:21:48Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
   "count": 625,
@@ -13529,6 +13529,29 @@
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-4511"
     },
     {
+      "id": "CVE-2024-55651",
+      "published": "2025-05-08",
+      "modified": "2025-06-17",
+      "cvss": 5.4,
+      "severity": "MEDIUM",
+      "description": "i-Educar is free, fully online school management software. Version 2.9 of the application fails to properly validate and sanitize user supplied input, leading to a stored cross-site scripting vulnerability that resides within the user type (Tipo de Usuário) input field. Through this attacker vector a malicious user might be able to retrieve information belonging to another user, which may lead to sensitive information leakage or other malicious actions. As of time of publication, no patched versions are known to exist.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-55651"
+    },
+    {
       "id": "CVE-2025-37833",
       "published": "2025-05-08",
       "modified": "2025-11-14",
@@ -13552,29 +13575,6 @@
         "infotainment_os"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-37833"
-    },
-    {
-      "id": "CVE-2024-55651",
-      "published": "2025-05-08",
-      "modified": "2025-06-17",
-      "cvss": 5.4,
-      "severity": "MEDIUM",
-      "description": "i-Educar is free, fully online school management software. Version 2.9 of the application fails to properly validate and sanitize user supplied input, leading to a stored cross-site scripting vulnerability that resides within the user type (Tipo de Usuário) input field. Through this attacker vector a malicious user might be able to retrieve information belonging to another user, which may lead to sensitive information leakage or other malicious actions. As of time of publication, no patched versions are known to exist.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": "bcm",
-      "components": [
-        "LIN"
-      ],
-      "categories": [
-        "in_vehicle_network",
-        "wireless_connectivity"
-      ],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-55651"
     },
     {
       "id": "CVE-2025-20154",
