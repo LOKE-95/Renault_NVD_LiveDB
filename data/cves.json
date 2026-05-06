@@ -1,15 +1,38 @@
 {
-  "generated_at": "2026-05-05T05:51:27Z",
+  "generated_at": "2026-05-06T06:13:10Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
   "count": 626,
   "cves": [
     {
-      "id": "CVE-2026-42027",
-      "published": "2026-05-04",
-      "modified": "2026-05-04",
+      "id": "CVE-2026-34464",
+      "published": "2026-05-05",
+      "modified": "2026-05-05",
       "cvss": null,
       "severity": "UNKNOWN",
+      "description": "Sandboxie-Plus is an open source sandbox-based isolation software for Windows. In versions 1.17.2 and earlier, NamedPipeServer::OpenHandler copies the server field from NAMED_PIPE_OPEN_REQ into a fixed WCHAR pipename[160] stack buffer using wcscat without verifying null termination. The handler only enforces a minimum packet size, and since the service pipe accepts variable-length messages, a sandboxed caller can fill the server[48] field with non-zero data and append additional controlled wide characters after the structure. wcscat then reads past the fixed field and overflows the stack buffer in the SYSTEM service. This message is restricted to sandboxed callers, making it a sandbox escape vector. This can lead to a crash of the SbieSvc service or potential code execution as SYSTEM. This issue has been fixed in version 1.17.3.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity",
+        "supply_chain"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34464"
+    },
+    {
+      "id": "CVE-2026-42027",
+      "published": "2026-05-04",
+      "modified": "2026-05-05",
+      "cvss": 9.8,
+      "severity": "CRITICAL",
       "description": "Arbitrary Class Instantiation via Model Manifest in Apache OpenNLP ExtensionLoader\n\n\n\n\n\nVersions Affected: before 2.5.9, before 3.0.0-M3\n\n\n\n\n\nDescription: \n\nThe ExtensionLoader.instantiateExtension(Class, String) method loads a class by its fully-qualified name via Class.forName() and invokes its no-arg constructor, with the class name sourced from the manifest.properties entry of a model archive. The existing isAssignableFrom check correctly rejects classes that are not subtypes of the expected extension interface (BaseToolFactory for factory=, ArtifactSerializer for serializer-class-*), but the check runs after Class.forName() has already loaded and initialized the named class. \n\nClass.forName() with default initialization semantics executes the target class's static initializer before returning, so an attacker who can supply a crafted model archive can cause the static initializer of any class on the classpath to run during model loading, regardless of whether that class passes the subsequent type check. \n\nExploitation requires a class with attacker-useful side effects in its static initializer (for example, JNDI lookup, outbound network I/O, or filesystem access) to be present on the classpath, so this is not a drop-in remote code execution; however, the attack surface grows as third-party model distribution becomes more common (community model repositories, Hugging Face-style sharing), where users routinely load model files from origins they do not control. A secondary, narrower vector affects deployments that ship legitimate BaseToolFactory or ArtifactSerializer subclasses with side-effecting no-arg constructors: a malicious manifest can name such a class and force its constructor to run during model load.\n\n\n\n\n\nMitigation: \n\n\n\n  *  2.x users should upgrade to 2.5.9. \n  *  3.x users should upgrade to 3.0.0-M3. \n\n\n\n\nNote: The fix introduces a package-prefix allowlist that is consulted before Class.forName() is invoked, so the static initializer of a disallowed class is never executed. Classes under the opennlp. prefix remain permitted by default. Deployments that load models referencing factories or serializers outside opennlp.* must opt those packages in, either programmatically via ExtensionLoader.registerAllowedPackage(String) before the first model load, or by setting the OPENNLP_EXT_ALLOWED_PACKAGES system property to a comma-separated list of allowed package prefixes. \n\nUsers who cannot upgrade immediately should ensure that all model files are sourced from trusted origins and should audit their classpath for classes with side-effecting static initializers or constructors, particularly any that perform JNDI lookups, network requests, or filesystem operations during class initialization.",
       "matched_oems": [
         "renault"
@@ -1834,7 +1857,7 @@
     {
       "id": "CVE-2026-34317",
       "published": "2026-04-21",
-      "modified": "2026-04-22",
+      "modified": "2026-05-05",
       "cvss": 5.0,
       "severity": "MEDIUM",
       "description": "Vulnerability in the MySQL Shell product of Oracle MySQL (component: Shell: Core Client).  Supported versions that are affected are 8.0.0-8.0.45, 8.4.0-8.4.8 and  9.0.0-9.6.0. Easily exploitable vulnerability allows low privileged attacker with logon to the infrastructure where MySQL Shell executes to compromise MySQL Shell.  Successful attacks require human interaction from a person other than the attacker. Successful attacks of this vulnerability can result in unauthorized ability to cause a hang or frequently repeatable crash (complete DOS) of MySQL Shell. CVSS 3.1 Base Score 5.0 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:N/A:H).",
@@ -1856,7 +1879,7 @@
     {
       "id": "CVE-2026-34318",
       "published": "2026-04-21",
-      "modified": "2026-04-22",
+      "modified": "2026-05-05",
       "cvss": 5.8,
       "severity": "MEDIUM",
       "description": "Vulnerability in the MySQL Shell product of Oracle MySQL (component: Shell: Core Client).  Supported versions that are affected are 8.0.0-8.0.45, 8.4.0-8.4.8 and  9.0.0-9.6.0. Difficult to exploit vulnerability allows high privileged attacker with network access via multiple protocols to compromise MySQL Shell.  While the vulnerability is in MySQL Shell, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all MySQL Shell accessible data. CVSS 3.1 Base Score 5.8 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:N/A:N).",
@@ -1878,7 +1901,7 @@
     {
       "id": "CVE-2026-34319",
       "published": "2026-04-21",
-      "modified": "2026-04-22",
+      "modified": "2026-05-05",
       "cvss": 5.0,
       "severity": "MEDIUM",
       "description": "Vulnerability in the MySQL Shell product of Oracle MySQL (component: Shell: Core Client).  Supported versions that are affected are 8.0.0-8.0.45, 8.4.0-8.4.8 and  9.0.0-9.6.0. Easily exploitable vulnerability allows low privileged attacker with logon to the infrastructure where MySQL Shell executes to compromise MySQL Shell.  Successful attacks require human interaction from a person other than the attacker. Successful attacks of this vulnerability can result in unauthorized ability to cause a hang or frequently repeatable crash (complete DOS) of MySQL Shell. CVSS 3.1 Base Score 5.0 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:N/A:H).",
@@ -2010,7 +2033,7 @@
     {
       "id": "CVE-2026-35229",
       "published": "2026-04-21",
-      "modified": "2026-04-22",
+      "modified": "2026-05-05",
       "cvss": 7.5,
       "severity": "HIGH",
       "description": "Vulnerability in the Java VM component of Oracle Database Server.  Supported versions that are affected are 19.3-19.30 and  21.3-21.21. Easily exploitable vulnerability allows unauthenticated attacker with network access via Oracle Net to compromise Java VM.  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Java VM accessible data. CVSS 3.1 Base Score 7.5 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
@@ -2314,7 +2337,7 @@
     {
       "id": "CVE-2026-35244",
       "published": "2026-04-21",
-      "modified": "2026-04-22",
+      "modified": "2026-05-05",
       "cvss": 5.2,
       "severity": "MEDIUM",
       "description": "Vulnerability in the Oracle Hyperion Infrastructure Technology product of Oracle Hyperion (component: Lifecycle Management).   The supported version that is affected is 11.2.24.0.000. Easily exploitable vulnerability allows high privileged attacker with network access via HTTP to compromise Oracle Hyperion Infrastructure Technology.  Successful attacks require human interaction from a person other than the attacker. Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle Hyperion Infrastructure Technology accessible data as well as  unauthorized read access to a subset of Oracle Hyperion Infrastructure Technology accessible data. CVSS 3.1 Base Score 5.2 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:H/A:N).",
@@ -13619,30 +13642,6 @@
         "wireless_connectivity"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-20154"
-    },
-    {
-      "id": "CVE-2025-46734",
-      "published": "2025-05-05",
-      "modified": "2026-04-15",
-      "cvss": 6.4,
-      "severity": "MEDIUM",
-      "description": "league/commonmark is a PHP Markdown parser. A cross-site scripting (XSS) vulnerability in the Attributes extension of the league/commonmark library (versions 1.5.0 through 2.6.x) allows remote attackers to insert malicious JavaScript calls into HTML. The league/commonmark library provides configuration options such as `html_input: 'strip'` and `allow_unsafe_links: false` to mitigate cross-site scripting (XSS) attacks by stripping raw HTML and disallowing unsafe links. However, when the Attributes Extension is enabled, it introduces a way for users to inject arbitrary HTML attributes into elements via Markdown syntax using curly braces. Version 2.7.0 contains three changes to prevent this XSS attack vector: All attributes starting with `on` are considered unsafe and blocked by default; support for an explicit allowlist of allowed HTML attributes; and manually-added `href` and `src` attributes now respect the existing `allow_unsafe_links` configuration option. If upgrading is not feasible, please consider disabling the `AttributesExtension` for untrusted users and/or filtering the rendered HTML through a library like HTMLPurifier.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": "bcm",
-      "components": [
-        "LIN"
-      ],
-      "categories": [
-        "in_vehicle_network",
-        "wireless_connectivity",
-        "supply_chain"
-      ],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-46734"
     }
   ]
 }
