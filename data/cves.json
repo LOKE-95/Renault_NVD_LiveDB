@@ -1,13 +1,56 @@
 {
-  "generated_at": "2026-05-06T06:13:10Z",
+  "generated_at": "2026-05-07T06:18:59Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 626,
+  "count": 628,
   "cves": [
+    {
+      "id": "CVE-2026-43096",
+      "published": "2026-05-06",
+      "modified": "2026-05-06",
+      "cvss": null,
+      "severity": "UNKNOWN",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmshv: Fix infinite fault loop on permission-denied GPA intercepts\n\nPrevent infinite fault loops when guests access memory regions without\nproper permissions. Currently, mshv_handle_gpa_intercept() attempts to\nremap pages for all faults on movable memory regions, regardless of\nwhether the access type is permitted. When a guest writes to a read-only\nregion, the remap succeeds but the region remains read-only, causing\nimmediate re-fault and spinning the vCPU indefinitely.\n\nValidate intercept access type against region permissions before\nattempting remaps. Reject writes to non-writable regions and executes to\nnon-executable regions early, returning false to let the VMM handle the\nintercept appropriately.\n\nThis also closes a potential DoS vector where malicious guests could\nintentionally trigger these fault loops to consume host resources.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "infotainment",
+      "components": [
+        "Linux kernel",
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "wireless_connectivity",
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-43096"
+    },
+    {
+      "id": "CVE-2025-31970",
+      "published": "2026-05-06",
+      "modified": "2026-05-06",
+      "cvss": 5.3,
+      "severity": "MEDIUM",
+      "description": "HCL DFXAnalytics is affected by an Insecure Security Header configuration vulnerability where the Content-Security-Policy does not define strict directives for object-src and base-uri, which could allow an attacker to exploit injection vectors such as Cross-Site Scripting (XSS)",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-31970"
+    },
     {
       "id": "CVE-2026-34464",
       "published": "2026-05-05",
-      "modified": "2026-05-05",
+      "modified": "2026-05-06",
       "cvss": null,
       "severity": "UNKNOWN",
       "description": "Sandboxie-Plus is an open source sandbox-based isolation software for Windows. In versions 1.17.2 and earlier, NamedPipeServer::OpenHandler copies the server field from NAMED_PIPE_OPEN_REQ into a fixed WCHAR pipename[160] stack buffer using wcscat without verifying null termination. The handler only enforces a minimum packet size, and since the service pipe accepts variable-length messages, a sandboxed caller can fill the server[48] field with non-zero data and append additional controlled wide characters after the structure. wcscat then reads past the fixed field and overflows the stack buffer in the SYSTEM service. This message is restricted to sandboxed callers, making it a sandbox escape vector. This can lead to a crash of the SbieSvc service or potential code execution as SYSTEM. This issue has been fixed in version 1.17.3.",
@@ -30,7 +73,7 @@
     {
       "id": "CVE-2026-42027",
       "published": "2026-05-04",
-      "modified": "2026-05-05",
+      "modified": "2026-05-06",
       "cvss": 9.8,
       "severity": "CRITICAL",
       "description": "Arbitrary Class Instantiation via Model Manifest in Apache OpenNLP ExtensionLoader\n\n\n\n\n\nVersions Affected: before 2.5.9, before 3.0.0-M3\n\n\n\n\n\nDescription: \n\nThe ExtensionLoader.instantiateExtension(Class, String) method loads a class by its fully-qualified name via Class.forName() and invokes its no-arg constructor, with the class name sourced from the manifest.properties entry of a model archive. The existing isAssignableFrom check correctly rejects classes that are not subtypes of the expected extension interface (BaseToolFactory for factory=, ArtifactSerializer for serializer-class-*), but the check runs after Class.forName() has already loaded and initialized the named class. \n\nClass.forName() with default initialization semantics executes the target class's static initializer before returning, so an attacker who can supply a crafted model archive can cause the static initializer of any class on the classpath to run during model loading, regardless of whether that class passes the subsequent type check. \n\nExploitation requires a class with attacker-useful side effects in its static initializer (for example, JNDI lookup, outbound network I/O, or filesystem access) to be present on the classpath, so this is not a drop-in remote code execution; however, the attack surface grows as third-party model distribution becomes more common (community model repositories, Hugging Face-style sharing), where users routinely load model files from origins they do not control. A secondary, narrower vector affects deployments that ship legitimate BaseToolFactory or ArtifactSerializer subclasses with side-effecting no-arg constructors: a malicious manifest can name such a class and force its constructor to run during model load.\n\n\n\n\n\nMitigation: \n\n\n\n  *  2.x users should upgrade to 2.5.9. \n  *  3.x users should upgrade to 3.0.0-M3. \n\n\n\n\nNote: The fix introduces a package-prefix allowlist that is consulted before Class.forName() is invoked, so the static initializer of a disallowed class is never executed. Classes under the opennlp. prefix remain permitted by default. Deployments that load models referencing factories or serializers outside opennlp.* must opt those packages in, either programmatically via ExtensionLoader.registerAllowedPackage(String) before the first model load, or by setting the OPENNLP_EXT_ALLOWED_PACKAGES system property to a comma-separated list of allowed package prefixes. \n\nUsers who cannot upgrade immediately should ensure that all model files are sourced from trusted origins and should audit their classpath for classes with side-effecting static initializers or constructors, particularly any that perform JNDI lookups, network requests, or filesystem operations during class initialization.",
@@ -140,9 +183,9 @@
     {
       "id": "CVE-2026-31691",
       "published": "2026-04-27",
-      "modified": "2026-04-27",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-06",
+      "cvss": 5.5,
+      "severity": "MEDIUM",
       "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nigb: remove napi_synchronize() in igb_down()\n\nWhen an AF_XDP zero-copy application terminates abruptly (e.g., kill -9),\nthe XSK buffer pool is destroyed but NAPI polling continues.\nigb_clean_rx_irq_zc() repeatedly returns the full budget, preventing\nnapi_complete_done() from clearing NAPI_STATE_SCHED.\n\nigb_down() calls napi_synchronize() before napi_disable() for each queue\nvector. napi_synchronize() spins waiting for NAPI_STATE_SCHED to clear,\nwhich never happens. igb_down() blocks indefinitely, the TX watchdog\nfires, and the TX queue remains permanently stalled.\n\nnapi_disable() already handles this correctly: it sets NAPI_STATE_DISABLE.\nAfter a full-budget poll, __napi_poll() checks napi_disable_pending(). If\nset, it forces completion and clears NAPI_STATE_SCHED, breaking the loop\nthat napi_synchronize() cannot.\n\nnapi_synchronize() was added in commit 41f149a285da (\"igb: Fix possible\npanic caused by Rx traffic arrival while interface is down\").\nnapi_disable() provides stronger guarantees: it prevents further\nscheduling and waits for any active poll to exit.\nOther Intel drivers (ixgbe, ice, i40e) use napi_disable() without a\npreceding napi_synchronize() in their down paths.\n\nRemove redundant napi_synchronize() call and reorder napi_disable()\nbefore igb_set_queue_napi() so the queue-to-NAPI mapping is only\ncleared after polling has fully stopped.",
       "matched_oems": [
         "renault"
@@ -215,7 +258,7 @@
     {
       "id": "CVE-2026-6861",
       "published": "2026-04-22",
-      "modified": "2026-04-22",
+      "modified": "2026-05-06",
       "cvss": 6.1,
       "severity": "MEDIUM",
       "description": "A flaw was found in GNU Emacs. This vulnerability, a memory corruption issue, occurs when Emacs processes specially crafted SVG (Scalable Vector Graphics) CSS (Cascading Style Sheets) data. A local user could exploit this by convincing a victim to open a malicious SVG file, which may lead to a denial of service (DoS) or potentially information disclosure.",
@@ -2705,7 +2748,7 @@
     {
       "id": "CVE-2026-22155",
       "published": "2026-04-14",
-      "modified": "2026-04-17",
+      "modified": "2026-05-06",
       "cvss": 6.5,
       "severity": "MEDIUM",
       "description": "A cleartext transmission of sensitive information vulnerability in Fortinet FortiSOAR PaaS 7.6.0 through 7.6.3, FortiSOAR PaaS 7.5.0 through 7.5.2, FortiSOAR PaaS 7.4 all versions, FortiSOAR PaaS 7.3 all versions, FortiSOAR on-premise 7.6.0 through 7.6.2, FortiSOAR on-premise 7.5.0 through 7.5.1, FortiSOAR on-premise 7.4 all versions, FortiSOAR on-premise 7.3 all versions may allow attacker to information disclosure via <insert attack vector here>",
