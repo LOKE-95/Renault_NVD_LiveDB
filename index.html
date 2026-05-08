@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUTOSEC // Automotive Cybersecurity Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">ASEC</div>
+      <div>
+        <h1>Automotive Cybersecurity Dashboard</h1>
+        <p class="subtitle">NVD CVE INTEL &middot; ECU &amp; COMPONENT MAP &middot; ISO 21434 / UN R155 / R156 / AIS-189</p>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="threat-level">
+        <span class="tl-label">THREAT LEVEL</span>
+        <span class="tl-value" id="tl-value">&#8212;</span>
+      </div>
+      <span class="health-pill" id="health-pill" data-status="unknown" title="Loading status&hellip;">
+        <span class="health-dot"></span>
+        <span class="health-label" id="health-label">STATUS: LOADING</span>
+      </span>
+      <span id="last-updated">INITIALIZING&hellip;</span>
+      <span class="kbd-hint">Press <kbd>/</kbd> to search &middot; <kbd>ESC</kbd> to clear</span>
+      <div class="health-popover" id="health-popover" hidden></div>
+    </div>
+  </header>
+
+  <nav class="oem-filter" id="oem-filter">
+    <button class="chip active" data-oem="all">All OEMs</button>
+    <button class="chip" data-oem="renault">Renault</button>
+    <button class="chip" data-oem="mahindra">Mahindra</button>
+    <button class="chip" data-oem="maruti_suzuki">Maruti Suzuki</button>
+  </nav>
+
+  <div class="active-filters" id="active-filters" hidden>
+    <span class="active-filters-label">&#9656; Active filters:</span>
+    <span id="active-filter-chips"></span>
+    <button class="clear-all" id="clear-filters">Clear all</button>
+  </div>
+
+  <section class="kpis" id="kpis">
+    <div class="kpi">
+      <span class="kpi-label">Total CVEs</span>
+      <span class="kpi-value" id="kpi-total">&#8212;</span>
+      <canvas class="sparkline" id="spark-total"></canvas>
+    </div>
+    <div class="kpi critical">
+      <span class="kpi-label">Critical</span>
+      <span class="kpi-value" id="kpi-critical">&#8212;</span>
+      <canvas class="sparkline" id="spark-critical"></canvas>
+    </div>
+    <div class="kpi high">
+      <span class="kpi-label">High</span>
+      <span class="kpi-value" id="kpi-high">&#8212;</span>
+      <canvas class="sparkline" id="spark-high"></canvas>
+    </div>
+    <div class="kpi">
+      <span class="kpi-label">Avg CVSS</span>
+      <span class="kpi-value" id="kpi-avg">&#8212;</span>
+      <span class="kpi-sub" id="kpi-avg-trend"></span>
+    </div>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="cves">CVE Table</button>
+    <button class="tab" data-tab="ecu">ECU / Components</button>
+    <button class="tab" data-tab="compliance">Compliance Matrix</button>
+    <button class="tab" data-tab="resources">Resources</button>
+  </nav>
+
+  <main>
+    <!-- ============== OVERVIEW TAB ============== -->
+    <section class="tab-panel active" id="panel-overview">
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Risk Heatmap &mdash; OEM &times; ECU Class</h3>
+          <span class="card-hint">Cell color = highest CVSS in that combo &middot; click to drill down</span>
+        </div>
+        <div class="heatmap-wrap" id="heatmap"></div>
+      </div>
+
+      <div class="grid two-col">
+        <div class="card">
+          <div class="card-header">
+            <h3>Top Concerns</h3>
+            <span class="card-hint">Ranked by severity, recency &amp; OEM spread</span>
+          </div>
+          <div id="top-concerns" class="concerns-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>OEM Comparison</h3>
+            <span class="card-hint">CVEs by severity &middot; click bar segment to filter</span>
+          </div>
+          <canvas id="chart-oem-compare"></canvas>
+        </div>
+      </div>
+
+      <div class="grid two-col">
+        <div class="card">
+          <div class="card-header">
+            <h3>CVE Volume Over Time</h3>
+            <span class="card-hint">Stacked by severity</span>
+          </div>
+          <canvas id="chart-trend"></canvas>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Top Affected Components</h3>
+            <span class="card-hint">Click bar to filter</span>
+          </div>
+          <canvas id="chart-components"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== CVE TABLE TAB ============== -->
+    <section class="tab-panel" id="panel-cves">
+      <div class="filter-bar">
+        <input type="search" id="cve-search" placeholder="Search CVE ID, description, component&hellip; (press /)" />
+        <select id="filter-severity">
+          <option value="all">All Severities</option>
+          <option value="CRITICAL">Critical</option>
+          <option value="HIGH">High</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="LOW">Low</option>
+        </select>
+        <select id="filter-ecu">
+          <option value="all">All ECU Classes</option>
+        </select>
+        <button class="btn-export" id="btn-export">&#8659; Export CSV</button>
+        <span class="result-count" id="cve-count"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="cve-table" id="cve-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th data-sort="id">CVE ID</th>
+              <th data-sort="severity">Severity</th>
+              <th data-sort="cvss">CVSS</th>
+              <th data-sort="published">Published</th>
+              <th>OEMs</th>
+              <th>ECU Class</th>
+              <th>Components</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="cve-tbody"></tbody>
+        </table>
+        <div class="empty-state" id="cve-empty" hidden>
+          <p>No CVEs match the current filters.</p>
+          <button class="btn" id="cve-empty-clear">Clear Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== ECU BREAKDOWN TAB ============== -->
+    <section class="tab-panel" id="panel-ecu">
+      <div id="ecu-breakdown"></div>
+    </section>
+
+    <!-- ============== COMPLIANCE MATRIX TAB ============== -->
+    <section class="tab-panel" id="panel-compliance">
+      <div id="compliance-content"></div>
+    </section>
+
+    <!-- ============== RESOURCES TAB ============== -->
+    <section class="tab-panel" id="panel-resources">
+      <div id="resources-content"></div>
+    </section>
+  </main>
+
+  <!-- ============== CONTACT SECTION ============== -->
+  <section class="contact-section">
+    <div class="contact-inner">
+      <div class="contact-header">
+        <h2>Contact the Researcher</h2>
+        <p>Automotive Cybersecurity &middot; ECU Security &middot; Threat Analysis</p>
+      </div>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <span class="contact-icon">&#9670;</span>
+          <div>
+            <div class="contact-card-label">Researcher</div>
+            <div class="contact-card-value">Lokghesh VAK</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon">&#9993;</span>
+          <div>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-value">
+              <a href="mailto:vaklokghesh@gmail.com">vaklokghesh@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon">&#9965;</span>
+          <div>
+            <div class="contact-card-label">Focus</div>
+            <div class="contact-card-value">Automotive Cybersecurity</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon">&#9711;</span>
+          <div>
+            <div class="contact-card-label">Standards</div>
+            <div class="contact-card-value">ISO 21434 &middot; UN R155/R156</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      Data: <a href="https://nvd.nist.gov/" target="_blank" rel="noreferrer">NVD CVE 2.0</a>
+      &middot; Standards referenced for educational use only
+      &middot; <a href="https://github.com/" target="_blank" rel="noreferrer">Source on GitHub</a>
+      &middot; Built for automotive cybersecurity professionals
+    </p>
+  </footer>
+
+  <!-- Loading skeleton overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-bar"></div>
+    <p>Initializing threat intelligence&hellip;</p>
+  </div>
+
+  <script src="assets/js/dashboard.js" type="module"></script>
+</body>
+</html>
