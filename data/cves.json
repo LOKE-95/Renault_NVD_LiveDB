@@ -1,9 +1,57 @@
 {
-  "generated_at": "2026-05-11T06:49:08Z",
+  "generated_at": "2026-05-12T06:21:27Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 628,
+  "count": 630,
   "cves": [
+    {
+      "id": "CVE-2026-43500",
+      "published": "2026-05-11",
+      "modified": "2026-05-11",
+      "cvss": 7.8,
+      "severity": "HIGH",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrxrpc: Also unshare DATA/RESPONSE packets when paged frags are present\n\nThe DATA-packet handler in rxrpc_input_call_event() and the RESPONSE\nhandler in rxrpc_verify_response() copy the skb to a linear one before\ncalling into the security ops only when skb_cloned() is true.  An skb\nthat is not cloned but still carries externally-owned paged fragments\n(e.g. SKBFL_SHARED_FRAG set by splice() into a UDP socket via\n__ip_append_data, or a chained skb_has_frag_list()) falls through to\nthe in-place decryption path, which binds the frag pages directly into\nthe AEAD/skcipher SGL via skb_to_sgvec().\n\nExtend the gate to also unshare when skb_has_frag_list() or\nskb_has_shared_frag() is true.  This catches the splice-loopback vector\nand other externally-shared frag sources while preserving the\nzero-copy fast path for skbs whose frags are kernel-private (e.g. NIC\npage_pool RX, GRO).  The OOM/trace handling already in place is reused.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "infotainment",
+      "components": [
+        "Linux kernel",
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "infotainment_os",
+        "crypto_tls"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-43500"
+    },
+    {
+      "id": "CVE-2026-44659",
+      "published": "2026-05-11",
+      "modified": "2026-05-11",
+      "cvss": 4.7,
+      "severity": "MEDIUM",
+      "description": "Zen is a firefox-based browser. Prior to 1.19.12b, the ZEN Browser incorrectly truncates long hostnames in the address bar and shows only the attacker-controlled prefix of the subdomain, hiding the actual registrable domain (eTLD+1). As a result, an attacker can craft extremely long malicious subdomains that visually imitate trusted brands, and the browser will display only the spoofed prefix, misleading users about the actual origin of the site. This directly compromises the URL bar as a security indicator and creates a phishing/supply-chain attack vector. This vulnerability is fixed in 1.19.12b.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity",
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44659"
+    },
     {
       "id": "CVE-2026-43315",
       "published": "2026-05-08",
@@ -10022,10 +10070,10 @@
     {
       "id": "CVE-2025-56513",
       "published": "2025-09-30",
-      "modified": "2025-10-15",
+      "modified": "2026-05-11",
       "cvss": 9.8,
       "severity": "CRITICAL",
-      "description": "NiceHash QuickMiner 6.12.0 perform software updates over HTTP without validating digital signatures or hash checks. An attacker capable of intercepting or redirecting traffic to the update url and can hijack the update process and deliver arbitrary executables that are automatically executed, resulting in full remote code execution. This constitutes a critical supply chain attack vector.",
+      "description": "NiceHash QuickMiner 6.12.0 perform software updates over HTTP without validating digital signatures or hash checks. An attacker capable of intercepting or redirecting traffic to the update url and can hijack the update process and deliver arbitrary executables that are automatically executed, resulting in full remote code execution. This constitutes a critical supply chain attack vector. NOTE: the Supplier reports that the existence of an http://update.nicehash.com URL is a fabrication, and that there is no other use of HTTP (rather than HTTPS).",
       "matched_oems": [
         "renault"
       ],
