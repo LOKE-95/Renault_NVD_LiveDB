@@ -1,9 +1,83 @@
 {
-  "generated_at": "2026-05-12T06:21:27Z",
+  "generated_at": "2026-05-13T06:33:59Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 630,
+  "count": 634,
   "cves": [
+    {
+      "id": "CVE-2026-44277",
+      "published": "2026-05-12",
+      "modified": "2026-05-12",
+      "cvss": 9.8,
+      "severity": "CRITICAL",
+      "description": "A improper access control vulnerability in Fortinet FortiAuthenticator 8.0.2, FortiAuthenticator 8.0.0, FortiAuthenticator 6.6.0 through 6.6.8, FortiAuthenticator 6.5.0 through 6.5.6 may allow attacker to execute unauthorized code or commands via <insert attack vector here>",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44277"
+    },
+    {
+      "id": "CVE-2026-44278",
+      "published": "2026-05-12",
+      "modified": "2026-05-12",
+      "cvss": 2.3,
+      "severity": "LOW",
+      "description": "A use of hard-coded cryptographic key vulnerability in Fortinet FortiClientWindows 7.4.0 through 7.4.2, FortiClientWindows 7.2 all versions may allow attacker to information disclosure via <insert attack vector here>",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44278"
+    },
+    {
+      "id": "CVE-2026-44279",
+      "published": "2026-05-12",
+      "modified": "2026-05-12",
+      "cvss": 5.5,
+      "severity": "MEDIUM",
+      "description": "A improper export of android application components vulnerability in Fortinet FortiTokenAndroid 6.2 all versions, FortiTokenAndroid 6.1 all versions, FortiTokenAndroid 5.2 all versions may allow attacker to improper access control via <insert attack vector here>",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44279"
+    },
+    {
+      "id": "CVE-2026-34685",
+      "published": "2026-05-12",
+      "modified": "2026-05-12",
+      "cvss": 3.4,
+      "severity": "LOW",
+      "description": "Adobe Commerce versions 2.4.9-beta1, 2.4.8-p4, 2.4.7-p9, 2.4.6-p14, 2.4.5-p16, 2.4.4-p17 and earlier [NEEDS REVIEW: impact mismatch — ticket says 'Arbitrary file system write', CIA triad derives 'Security Feature Bypass'. Verify CVSS vector before publishing.] are affected by an Improper Input Validation vulnerability that could result in a Security feature bypass. A high-privileged attacker could leverage this vulnerability to bypass security measures and gain unauthorized write access. Exploitation of this issue requires user interaction in that a victim must visit a maliciously crafted URL or interact with a compromised web page. Scope is changed.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34685"
+    },
     {
       "id": "CVE-2026-43500",
       "published": "2026-05-11",
@@ -55,7 +129,7 @@
     {
       "id": "CVE-2026-43315",
       "published": "2026-05-08",
-      "modified": "2026-05-08",
+      "modified": "2026-05-12",
       "cvss": null,
       "severity": "UNKNOWN",
       "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: nSVM: Remove a user-triggerable WARN on nested_svm_load_cr3() succeeding\n\nDrop the WARN in svm_set_nested_state() on nested_svm_load_cr3() failing\nas it is trivially easy to trigger from userspace by modifying CPUID after\nloading CR3.  E.g. modifying the state restoration selftest like so:\n\n  --- tools/testing/selftests/kvm/x86/state_test.c\n  +++ tools/testing/selftests/kvm/x86/state_test.c\n  @@ -280,7 +280,16 @@ int main(int argc, char *argv[])\n\n                 /* Restore state in a new VM.  */\n                  vcpu = vm_recreate_with_one_vcpu(vm);\n  -               vcpu_load_state(vcpu, state);\n  +\n  +               if (stage == 4) {\n  +                       state->sregs.cr3 = BIT(44);\n  +                       vcpu_load_state(vcpu, state);\n  +\n  +                       vcpu_set_cpuid_property(vcpu, X86_PROPERTY_MAX_PHY_ADDR, 36);\n  +                       __vcpu_nested_state_set(vcpu, &state->nested);\n  +               } else {\n  +                       vcpu_load_state(vcpu, state);\n  +               }\n\n                  /*\n                   * Restore XSAVE state in a dummy vCPU, first without doing\n\ngenerates:\n\n  WARNING: CPU: 30 PID: 938 at arch/x86/kvm/svm/nested.c:1877 svm_set_nested_state+0x34a/0x360 [kvm_amd]\n  Modules linked in: kvm_amd kvm irqbypass [last unloaded: kvm]\n  CPU: 30 UID: 1000 PID: 938 Comm: state_test Tainted: G        W           6.18.0-rc7-58e10b63777d-next-vm\n  Tainted: [W]=WARN\n  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015\n  RIP: 0010:svm_set_nested_state+0x34a/0x360 [kvm_amd]\n  Call Trace:\n   <TASK>\n   kvm_arch_vcpu_ioctl+0xf33/0x1700 [kvm]\n   kvm_vcpu_ioctl+0x4e6/0x8f0 [kvm]\n   __x64_sys_ioctl+0x8f/0xd0\n   do_syscall_64+0x61/0xad0\n   entry_SYSCALL_64_after_hwframe+0x4b/0x53\n\nSimply delete the WARN instead of trying to prevent userspace from shoving\n\"illegal\" state into CR3.  For better or worse, KVM's ABI allows userspace\nto set CPUID after SREGS, and vice versa, and KVM is very permissive when\nit comes to guest CPUID.  I.e. attempting to enforce the virtual CPU model\nwhen setting CPUID could break userspace.  Given that the WARN doesn't\nprovide any meaningful protection for KVM or benefit for userspace, simply\ndrop it even though the odds of breaking userspace are minuscule.\n\nOpportunistically delete a spurious newline.",
@@ -80,7 +154,7 @@
     {
       "id": "CVE-2026-43363",
       "published": "2026-05-08",
-      "modified": "2026-05-08",
+      "modified": "2026-05-12",
       "cvss": null,
       "severity": "UNKNOWN",
       "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nx86/apic: Disable x2apic on resume if the kernel expects so\n\nWhen resuming from s2ram, firmware may re-enable x2apic mode, which may have\nbeen disabled by the kernel during boot either because it doesn't support IRQ\nremapping or for other reasons. This causes the kernel to continue using the\nxapic interface, while the hardware is in x2apic mode, which causes hangs.\nThis happens on defconfig + bare metal + s2ram.\n\nFix this in lapic_resume() by disabling x2apic if the kernel expects it to be\ndisabled, i.e. when x2apic_mode = 0.\n\nThe ACPI v6.6 spec, Section 16.3 [1] says firmware restores either the\npre-sleep configuration or initial boot configuration for each CPU, including\nMSR state:\n\n  When executing from the power-on reset vector as a result of waking from an\n  S2 or S3 sleep state, the platform firmware performs only the hardware\n  initialization required to restore the system to either the state the\n  platform was in prior to the initial operating system boot, or to the\n  pre-sleep configuration state. In multiprocessor systems, non-boot\n  processors should be placed in the same state as prior to the initial\n  operating system boot.\n\n  (further ahead)\n\n  If this is an S2 or S3 wake, then the platform runtime firmware restores\n  minimum context of the system before jumping to the waking vector. This\n  includes:\n\n\tCPU configuration. Platform runtime firmware restores the pre-sleep\n\tconfiguration or initial boot configuration of each CPU (MSR, MTRR,\n\tfirmware update, SMBase, and so on). Interrupts must be disabled (for\n\tIA-32 processors, disabled by CLI instruction).\n\n\t(and other things)\n\nSo at least as per the spec, re-enablement of x2apic by the firmware is\nallowed if \"x2apic on\" is a part of the initial boot configuration.\n\n  [1] https://uefi.org/specs/ACPI/6.6/16_Waking_and_Sleeping.html#initialization\n\n  [ bp: Massage. ]",
@@ -128,7 +202,7 @@
     {
       "id": "CVE-2026-34354",
       "published": "2026-05-08",
-      "modified": "2026-05-08",
+      "modified": "2026-05-12",
       "cvss": 7.4,
       "severity": "HIGH",
       "description": "Akamai Guardicore Platform Agent (GPA) and Zero Trust Client on Linux and macOS allow TOCTOU-based local privilege escalation. The GPA service creates an IPC socket in the world-writable /tmp directory. It accepts unauthenticated IPC control messages. This enables a TOCTOU vulnerability in the HandleSaveLogs() function of the GPA service, by creating a log file and manipulating it into a symlink that points to the targeted path; this can allow an unprivileged local user to make arbitrary root-owned files world-writable. In addition, a diagnostic collection tool (gimmelogs) running with root privileges was vulnerable to command injection from the dbstore, offering a second privilege escalation vector. (On Windows, gimmelogs does not have command injection but does allow writing a ZIP archive to an unintended location.) This affects Akamai Guardicore Platform Agent 7.0 through 7.3.1 and Akamai Zero Trust Client 6.0 through 6.1.5.",
@@ -5329,7 +5403,7 @@
     {
       "id": "CVE-2026-21925",
       "published": "2026-01-20",
-      "modified": "2026-01-30",
+      "modified": "2026-05-12",
       "cvss": 4.8,
       "severity": "MEDIUM",
       "description": "Vulnerability in the Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition product of Oracle Java SE (component: RMI).  Supported versions that are affected are Oracle Java SE: 8u471, 8u471-b50, 8u471-perf, 11.0.29, 17.0.17, 21.0.9, 25.0.1; Oracle GraalVM for JDK: 17.0.17 and  21.0.9; Oracle GraalVM Enterprise Edition: 21.3.16. Difficult to exploit vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition.  Successful attacks of this vulnerability can result in  unauthorized update, insert or delete access to some of Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data as well as  unauthorized read access to a subset of Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data. Note: This vulnerability can be exploited by using APIs in the specified Component, e.g., through a web service which supplies data to the APIs. This vulnerability also applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. CVSS 3.1 Base Score 4.8 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N).",
@@ -5485,7 +5559,7 @@
     {
       "id": "CVE-2026-21932",
       "published": "2026-01-20",
-      "modified": "2026-01-30",
+      "modified": "2026-05-12",
       "cvss": 7.4,
       "severity": "HIGH",
       "description": "Vulnerability in the Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition product of Oracle Java SE (component: AWT, JavaFX).  Supported versions that are affected are Oracle Java SE: 8u471, 8u471-b50, 8u471-perf, 11.0.29, 17.0.17, 21.0.9, 25.0.1; Oracle GraalVM for JDK: 17.0.17 and  21.0.9; Oracle GraalVM Enterprise Edition: 21.3.16. Easily exploitable vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition.  Successful attacks require human interaction from a person other than the attacker and while the vulnerability is in Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data. Note: This vulnerability applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. This vulnerability does not apply to Java deployments, typically in servers, that load and run only trusted code (e.g., code installed by an administrator). CVSS 3.1 Base Score 7.4 (Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:H/A:N).",
@@ -5507,7 +5581,7 @@
     {
       "id": "CVE-2026-21933",
       "published": "2026-01-20",
-      "modified": "2026-01-30",
+      "modified": "2026-05-12",
       "cvss": 6.1,
       "severity": "MEDIUM",
       "description": "Vulnerability in the Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition product of Oracle Java SE (component: Networking).  Supported versions that are affected are Oracle Java SE: 8u471, 8u471-b50, 8u471-perf, 11.0.29, 17.0.17, 21.0.9, 25.0.1; Oracle GraalVM for JDK: 17.0.17 and  21.0.9; Oracle GraalVM Enterprise Edition: 21.3.16. Easily exploitable vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition.  Successful attacks require human interaction from a person other than the attacker and while the vulnerability is in Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in  unauthorized update, insert or delete access to some of Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data as well as  unauthorized read access to a subset of Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data. Note: This vulnerability can be exploited by using APIs in the specified Component, e.g., through a web service which supplies data to the APIs. This vulnerability also applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. CVSS 3.1 Base Score 6.1 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N).",
@@ -5771,7 +5845,7 @@
     {
       "id": "CVE-2026-21945",
       "published": "2026-01-20",
-      "modified": "2026-01-30",
+      "modified": "2026-05-12",
       "cvss": 7.5,
       "severity": "HIGH",
       "description": "Vulnerability in the Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition product of Oracle Java SE (component: Security).  Supported versions that are affected are Oracle Java SE: 8u471, 8u471-b50, 8u471-perf, 11.0.29, 17.0.17, 21.0.9, 25.0.1; Oracle GraalVM for JDK: 17.0.17 and  21.0.9; Oracle GraalVM Enterprise Edition: 21.3.16. Easily exploitable vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition.  Successful attacks of this vulnerability can result in unauthorized ability to cause a hang or frequently repeatable crash (complete DOS) of Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition. Note: This vulnerability applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. This vulnerability does not apply to Java deployments, typically in servers, that load and run only trusted code (e.g., code installed by an administrator). CVSS 3.1 Base Score 7.5 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
@@ -5815,7 +5889,7 @@
     {
       "id": "CVE-2026-21947",
       "published": "2026-01-20",
-      "modified": "2026-01-29",
+      "modified": "2026-05-12",
       "cvss": 3.1,
       "severity": "LOW",
       "description": "Vulnerability in Oracle Java SE (component: JavaFX).  Supported versions that are affected are Oracle Java SE: 8u471-b50. Difficult to exploit vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE.  Successful attacks require human interaction from a person other than the attacker. Successful attacks of this vulnerability can result in  unauthorized update, insert or delete access to some of Oracle Java SE accessible data. Note: This vulnerability applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. This vulnerability does not apply to Java deployments, typically in servers, that load and run only trusted code (e.g., code installed by an administrator). CVSS 3.1 Base Score 3.1 (Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N).",
@@ -8036,7 +8110,7 @@
     {
       "id": "CVE-2025-55754",
       "published": "2025-10-27",
-      "modified": "2025-11-14",
+      "modified": "2026-05-12",
       "cvss": 9.6,
       "severity": "CRITICAL",
       "description": "Improper Neutralization of Escape, Meta, or Control Sequences vulnerability in Apache Tomcat.\n\nTomcat did not escape ANSI escape sequences in log messages. If Tomcat was running in a console on a Windows operating system, and the console supported ANSI escape sequences, it was possible for an attacker to use a specially crafted URL to inject ANSI escape sequences to manipulate the console and the clipboard and attempt to trick an administrator into running an attacker controlled command. While no attack vector was found, it may have been possible to mount this attack on other operating systems.\n\n\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.10, from 10.1.0-M1 through 10.1.44, from 9.0.40 through 9.0.108.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.60 though 8.5.100. Other, older, EOL versions may also be affected.\nUsers are recommended to upgrade to version 11.0.11 or later, 10.1.45 or later or 9.0.109 or later, which fix the issue.",
@@ -8641,7 +8715,7 @@
     {
       "id": "CVE-2025-53057",
       "published": "2025-10-21",
-      "modified": "2025-11-03",
+      "modified": "2026-05-12",
       "cvss": 5.9,
       "severity": "MEDIUM",
       "description": "Vulnerability in the Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition product of Oracle Java SE (component: Security).  Supported versions that are affected are Oracle Java SE: 8u461, 8u461-perf, 11.0.28, 17.0.16, 21.0.8, 25; Oracle GraalVM for JDK: 17.0.16 and  21.0.8; Oracle GraalVM Enterprise Edition: 21.3.15. Difficult to exploit vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition.  Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data. Note: This vulnerability can be exploited by using APIs in the specified Component, e.g., through a web service which supplies data to the APIs. This vulnerability also applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. CVSS 3.1 Base Score 5.9 (Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N).",
@@ -8839,7 +8913,7 @@
     {
       "id": "CVE-2025-53066",
       "published": "2025-10-21",
-      "modified": "2025-11-03",
+      "modified": "2026-05-12",
       "cvss": 7.5,
       "severity": "HIGH",
       "description": "Vulnerability in the Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition product of Oracle Java SE (component: JAXP).  Supported versions that are affected are Oracle Java SE: 8u461, 8u461-perf, 11.0.28, 17.0.16, 21.0.8, 25; Oracle GraalVM for JDK: 17.0.16 and  21.0.8; Oracle GraalVM Enterprise Edition: 21.3.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition.  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data. Note: This vulnerability can be exploited by using APIs in the specified Component, e.g., through a web service which supplies data to the APIs. This vulnerability also applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. CVSS 3.1 Base Score 7.5 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
@@ -8993,7 +9067,7 @@
     {
       "id": "CVE-2025-61748",
       "published": "2025-10-21",
-      "modified": "2025-10-28",
+      "modified": "2026-05-12",
       "cvss": 3.7,
       "severity": "LOW",
       "description": "Vulnerability in the Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition product of Oracle Java SE (component: Libraries).  Supported versions that are affected are Oracle Java SE: 21.0.8 and  25; Oracle GraalVM for JDK: 21.0.8; Oracle GraalVM Enterprise Edition: 21.3.15. Difficult to exploit vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition.  Successful attacks of this vulnerability can result in  unauthorized update, insert or delete access to some of Oracle Java SE, Oracle GraalVM for JDK, Oracle GraalVM Enterprise Edition accessible data. Note: This vulnerability can be exploited by using APIs in the specified Component, e.g., through a web service which supplies data to the APIs. This vulnerability also applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. CVSS 3.1 Base Score 3.7 (Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N).",
