@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T06:30:17Z",
+  "generated_at": "2026-05-18T07:05:02Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
   "count": 634,
@@ -188,7 +188,7 @@
     {
       "id": "CVE-2026-43500",
       "published": "2026-05-11",
-      "modified": "2026-05-14",
+      "modified": "2026-05-17",
       "cvss": 7.8,
       "severity": "HIGH",
       "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrxrpc: Also unshare DATA/RESPONSE packets when paged frags are present\n\nThe DATA-packet handler in rxrpc_input_call_event() and the RESPONSE\nhandler in rxrpc_verify_response() copy the skb to a linear one before\ncalling into the security ops only when skb_cloned() is true.  An skb\nthat is not cloned but still carries externally-owned paged fragments\n(e.g. SKBFL_SHARED_FRAG set by splice() into a UDP socket via\n__ip_append_data, or a chained skb_has_frag_list()) falls through to\nthe in-place decryption path, which binds the frag pages directly into\nthe AEAD/skcipher SGL via skb_to_sgvec().\n\nExtend the gate to also unshare when skb_has_frag_list() or\nskb_has_shared_frag() is true.  This catches the splice-loopback vector\nand other externally-shared frag sources while preserving the\nzero-copy fast path for skbs whose frags are kernel-private (e.g. NIC\npage_pool RX, GRO).  The OOM/trace handling already in place is reused.",
