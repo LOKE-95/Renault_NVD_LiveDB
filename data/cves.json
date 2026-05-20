@@ -1,13 +1,34 @@
 {
-  "generated_at": "2026-05-19T06:56:50Z",
+  "generated_at": "2026-05-20T06:56:45Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 635,
+  "count": 636,
   "cves": [
+    {
+      "id": "CVE-2026-6394",
+      "published": "2026-05-20",
+      "modified": "2026-05-20",
+      "cvss": 5.4,
+      "severity": "MEDIUM",
+      "description": "The Nexa Blocks – Gutenberg Blocks, Page Builder for Gutenberg Editor & FSE plugin for WordPress is vulnerable to Server-Side Request Forgery (SSRF) in versions up to and including 1.1.1. This is due to the import_demo() function accepting a user-supplied URL in the demo_json_file POST parameter and passing it directly to wp_remote_get() without any URL validation or restriction against internal or private network destinations. The nexa_blocks_nonce required for the AJAX action is publicly exposed in the HTML source of any frontend page where the plugin is active via wp_localize_script on the enqueue_block_assets hook, effectively making the nonce available to all visitors and bypassing any intended authentication barrier. This makes it possible for unauthenticated attackers to make server-side HTTP requests to arbitrary internal or external destinations, potentially exposing internal services, cloud metadata endpoints such as the AWS instance metadata service, localhost services, and other resources not intended to be publicly accessible. A secondary SSRF vector also exists whereby image URLs extracted from the attacker-controlled JSON response are subsequently fetched via a second wp_remote_get() call, allowing chained exploitation through a crafted JSON payload.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [
+        "wireless_connectivity",
+        "backend_servers"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6394"
+    },
     {
       "id": "CVE-2026-8838",
       "published": "2026-05-18",
-      "modified": "2026-05-18",
+      "modified": "2026-05-19",
       "cvss": 9.8,
       "severity": "CRITICAL",
       "description": "Unsafe use of Python's eval() on server-received data in the vector_in() function in amazon-redshift-python-driver before 2.1.14 allows a rogue server or man-in-the-middle actor to execute arbitrary code on the client. \n\n\n\nTo remediate this issue, users should upgrade to version 2.1.14.",
@@ -353,9 +374,9 @@
     {
       "id": "CVE-2026-43096",
       "published": "2026-05-06",
-      "modified": "2026-05-06",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-19",
+      "cvss": 5.5,
+      "severity": "MEDIUM",
       "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmshv: Fix infinite fault loop on permission-denied GPA intercepts\n\nPrevent infinite fault loops when guests access memory regions without\nproper permissions. Currently, mshv_handle_gpa_intercept() attempts to\nremap pages for all faults on movable memory regions, regardless of\nwhether the access type is permitted. When a guest writes to a read-only\nregion, the remap succeeds but the region remains read-only, causing\nimmediate re-fault and spinning the vCPU indefinitely.\n\nValidate intercept access type against region permissions before\nattempting remaps. Reject writes to non-writable regions and executes to\nnon-executable regions early, returning false to let the VMM handle the\nintercept appropriately.\n\nThis also closes a potential DoS vector where malicious guests could\nintentionally trigger these fault loops to consume host resources.",
       "matched_oems": [
         "renault"
