@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-20T06:56:45Z",
+  "generated_at": "2026-05-21T07:01:54Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 636,
+  "count": 635,
   "cves": [
     {
       "id": "CVE-2026-6394",
@@ -24,6 +24,28 @@
         "backend_servers"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-6394"
+    },
+    {
+      "id": "CVE-2026-47099",
+      "published": "2026-05-20",
+      "modified": "2026-05-20",
+      "cvss": 6.1,
+      "severity": "MEDIUM",
+      "description": "TeleJSON prior to 6.0.0 contains a DOM-based cross-site scripting vulnerability in the parse() function that allows attackers to execute arbitrary JavaScript by delivering a crafted JSON payload containing a malicious _constructor-name_ property value. The custom reviver passes the constructor name directly to new Function() without sanitization when recreating object prototypes, enabling attackers to inject arbitrary JavaScript through vectors such as postMessage in cross-frame communication contexts to achieve script execution within the application.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-47099"
     },
     {
       "id": "CVE-2026-8838",
@@ -211,7 +233,7 @@
     {
       "id": "CVE-2026-34685",
       "published": "2026-05-12",
-      "modified": "2026-05-13",
+      "modified": "2026-05-20",
       "cvss": 3.4,
       "severity": "LOW",
       "description": "Adobe Commerce versions 2.4.9-beta1, 2.4.8-p4, 2.4.7-p9, 2.4.6-p14, 2.4.5-p16, 2.4.4-p17 and earlier [NEEDS REVIEW: impact mismatch — ticket says 'Arbitrary file system write', CIA triad derives 'Security Feature Bypass'. Verify CVSS vector before publishing.] are affected by an Improper Input Validation vulnerability that could result in a Security feature bypass. A high-privileged attacker could leverage this vulnerability to bypass security measures and gain unauthorized write access. Exploitation of this issue requires user interaction in that a victim must visit a maliciously crafted URL or interact with a compromised web page. Scope is changed.",
@@ -13824,46 +13846,6 @@
         "supply_chain"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3887"
-    },
-    {
-      "id": "CVE-2025-46724",
-      "published": "2025-05-20",
-      "modified": "2025-06-17",
-      "cvss": 9.8,
-      "severity": "CRITICAL",
-      "description": "Langroid is a Python framework to build large language model (LLM)-powered applications. Prior to version 0.53.15, `TableChatAgent` uses `pandas eval()`. If fed by untrusted user input, like the case of a public-facing LLM application, it may be vulnerable to code injection. Langroid 0.53.15 sanitizes input to `TableChatAgent` by default to tackle the most common attack vectors, and added several warnings about the risky behavior in the project documentation.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": null,
-      "components": [],
-      "categories": [
-        "wireless_connectivity"
-      ],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-46724"
-    },
-    {
-      "id": "CVE-2025-46725",
-      "published": "2025-05-20",
-      "modified": "2025-08-13",
-      "cvss": 9.8,
-      "severity": "CRITICAL",
-      "description": "Langroid is a Python framework to build large language model (LLM)-powered applications. Prior to version 0.53.15, `LanceDocChatAgent` uses pandas eval() through `compute_from_docs()`. As a result, an attacker may be able to make the agent run malicious commands through `QueryPlan.dataframe_calc]`) compromising the host system. Langroid 0.53.15 sanitizes input to the affected function by default to tackle the most common attack vectors, and added several warnings about the risky behavior in the project documentation.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": null,
-      "components": [],
-      "categories": [
-        "wireless_connectivity"
-      ],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-46725"
     }
   ]
 }
