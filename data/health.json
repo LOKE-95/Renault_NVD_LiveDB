@@ -1,15 +1,15 @@
 {
-  "checked_at": "2026-05-21T06:58:27Z",
+  "checked_at": "2026-05-22T06:54:28Z",
   "key": {
     "status": "valid",
-    "message": "Key accepted by NVD. NVD reports 351,884 total CVEs.",
+    "message": "Key accepted by NVD. NVD reports 352,097 total CVEs.",
     "rate_limit": null,
     "http_status": 200
   },
   "fetch": {
     "status": "ok",
-    "ran_at": "2026-05-21T07:01:54Z",
-    "cve_count": 635,
-    "message": "Fetched 635 CVEs across 365-day window."
+    "ran_at": "2026-05-22T06:56:55Z",
+    "cve_count": 675,
+    "message": "Fetched 675 CVEs across 365-day window."
   }
 }
