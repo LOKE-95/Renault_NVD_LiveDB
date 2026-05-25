@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-24T06:56:23Z",
+  "generated_at": "2026-05-25T07:42:08Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 674,
+  "count": 675,
   "cves": [
     {
       "id": "CVE-2026-6826",
@@ -11083,6 +11083,28 @@
         "wireless_connectivity"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-11437"
+    },
+    {
+      "id": "CVE-2025-57781",
+      "published": "2025-10-06",
+      "modified": "2026-04-15",
+      "cvss": 7.8,
+      "severity": "HIGH",
+      "description": "The installers of DENSO TEN drive recorder viewer contain an issue with the DLL search path, which may lead to insecurely loading Dynamic Link Libraries. As a result, arbitrary code may be executed with the privilege of the user invoking the installer.",
+      "matched_oems": [
+        "maruti_suzuki"
+      ],
+      "matched_keywords": [
+        "Denso"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-57781"
     },
     {
       "id": "CVE-2025-61882",
