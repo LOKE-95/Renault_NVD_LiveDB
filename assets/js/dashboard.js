@@ -3,17 +3,17 @@ import { renderCompliance } from "./compliance.js";
 
 const SEV_ORDER  = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "UNKNOWN", "NONE"];
 const SEV_COLORS = {
-  CRITICAL: "#ff2244",
-  HIGH:     "#ff8800",
-  MEDIUM:   "#ffcc00",
-  LOW:      "#00e676",
-  UNKNOWN:  "#4a7a9b",
-  NONE:     "#4a7a9b",
+  CRITICAL: "#e53935",
+  HIGH:     "#f4511e",
+  MEDIUM:   "#f5a623",
+  LOW:      "#43a868",
+  UNKNOWN:  "#555555",
+  NONE:     "#555555",
 };
 
-const CHART_GRID  = "rgba(0,200,255,0.08)";
-const CHART_TEXT  = "#b8ddf5";
-const CHART_MUTED = "#4a7a9b";
+const CHART_GRID  = "rgba(255,255,255,0.05)";
+const CHART_TEXT  = "#ebebeb";
+const CHART_MUTED = "#777777";
 
 const state = {
   cves: [],
@@ -739,9 +739,9 @@ function renderCharts(filteredArg) {
     datasets: [{
       label: "CVEs",
       data: top.map(t => t[1]),
-      backgroundColor: "rgba(0,200,255,0.25)",
-      hoverBackgroundColor: "rgba(0,200,255,0.5)",
-      borderColor: "rgba(0,200,255,0.6)",
+      backgroundColor: "rgba(232,137,12,0.25)",
+      hoverBackgroundColor: "rgba(232,137,12,0.5)",
+      borderColor: "rgba(232,137,12,0.6)",
       borderWidth: 1,
       borderRadius: 3,
     }],
