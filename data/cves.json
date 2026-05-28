@@ -1,15 +1,317 @@
 {
-  "generated_at": "2026-05-27T07:12:58Z",
+  "generated_at": "2026-05-28T07:04:42Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 687,
+  "count": 702,
   "cves": [
+    {
+      "id": "CVE-2026-7533",
+      "published": "2026-05-28",
+      "modified": "2026-05-28",
+      "cvss": 4.3,
+      "severity": "MEDIUM",
+      "description": "The Easy Digital Downloads plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 3.6.7. This is due to missing nonce verification in the `handle_oauth_redirect()` function, which is registered on the `admin_init` hook and processes Square OAuth tokens from a user-supplied GET parameter without any CSRF token validation. This makes it possible for unauthenticated attackers to overwrite the store's Square payment gateway credentials by tricking a logged-in administrator into clicking a crafted link, potentially resulting in payment account hijacking.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "easy link"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-7533"
+    },
+    {
+      "id": "CVE-2026-9009",
+      "published": "2026-05-28",
+      "modified": "2026-05-28",
+      "cvss": 8.8,
+      "severity": "HIGH",
+      "description": "The Crawlomatic Multipage Scraper Post Generator plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 2.7.2 via the filter_content function. This is due to passing the attacker-supplied 'callback_raw' shortcode attribute directly into call_user_func() with no sanitization or allowlist validation, relying solely on an is_callable() check that permits dangerous PHP built-ins such as system, shell_exec, exec, passthru, and assert. This makes it possible for authenticated attackers, with author-level access and above, to execute code on the server. An identical sink exists for the 'callback' attribute, providing a second independent vector through the same shortcode.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9009"
+    },
+    {
+      "id": "CVE-2023-52945",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 7.8,
+      "severity": "HIGH",
+      "description": "Uncontrolled search path element vulnerability in OpenSSL DLL component in Synology BeeDrive for desktop before 1.3.2-13814 allows local users to execute arbitrary code via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "telematics",
+      "components": [
+        "OpenSSL"
+      ],
+      "categories": [
+        "crypto_tls"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-52945"
+    },
+    {
+      "id": "CVE-2024-11399",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 6.8,
+      "severity": "MEDIUM",
+      "description": "Files or directories accessible to external parties vulnerability in redis-server component in Synology BeeDrive for desktop before 1.3.2-13814 allows local users to conduct denial-of-service attacks via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-11399"
+    },
+    {
+      "id": "CVE-2024-47267",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 2.7,
+      "severity": "LOW",
+      "description": "Improper limitation of a pathname to a restricted directory ('Path Traversal') vulnerability in Archiving Pull functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to limited file write via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47267"
+    },
+    {
+      "id": "CVE-2024-47268",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 4.9,
+      "severity": "MEDIUM",
+      "description": "Missing authorization vulnerability in AddOns functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to obtain sensitive information via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47268"
+    },
+    {
+      "id": "CVE-2024-47269",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 4.9,
+      "severity": "MEDIUM",
+      "description": "Cleartext transmission of sensitive information vulnerability in Export Key functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to obtain sensitive information via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47269"
+    },
+    {
+      "id": "CVE-2024-47270",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 2.7,
+      "severity": "LOW",
+      "description": "Improper preservation of permissions vulnerability in Archiving Push functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to limited file write via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47270"
+    },
+    {
+      "id": "CVE-2024-47271",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 4.9,
+      "severity": "MEDIUM",
+      "description": "Insufficiently protected credentials vulnerability in IPSpeaker component in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to obtain sensitive information via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47271"
+    },
+    {
+      "id": "CVE-2024-47272",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 2.7,
+      "severity": "LOW",
+      "description": "Incorrect authorization vulnerability in IO Module functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to limited file write via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47272"
+    },
+    {
+      "id": "CVE-2025-12686",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 9.8,
+      "severity": "CRITICAL",
+      "description": "Buffer copy without checking size of input ('Classic Buffer Overflow') vulnerability in AdminCenter in Synology BeeStation OS before 1.3.2-65648 allows remote attackers to execute arbitrary code via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-12686"
+    },
+    {
+      "id": "CVE-2025-13167",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": 5.4,
+      "severity": "MEDIUM",
+      "description": "Improper neutralization of input during web page generation ('Cross-site Scripting') vulnerability in contact functionality in Synology Contacts before 1.0.10-20659 allows remote authenticated users to read or write specific files containing non-sensitive information via unspecified vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-13167"
+    },
+    {
+      "id": "CVE-2026-46003",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": null,
+      "severity": "UNKNOWN",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: qrtr: ns: Limit the total number of nodes\n\nCurrently, the nameserver doesn't limit the number of nodes it handles.\nThis can be an attack vector if a malicious client starts registering\nrandom nodes, leading to memory exhaustion.\n\nHence, limit the maximum number of nodes to 64. Note that, limit of 64 is\nchosen based on the current platform requirements. If requirement changes\nin the future, this limit can be increased.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "infotainment",
+      "components": [
+        "Linux kernel",
+        "CAN",
+        "LIN"
+      ],
+      "categories": [
+        "ota_update",
+        "in_vehicle_network",
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46003"
+    },
+    {
+      "id": "CVE-2026-46060",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": null,
+      "severity": "UNKNOWN",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: qat - fix IRQ cleanup on 6xxx probe failure\n\nWhen adf_dev_up() partially completes and then fails, the IRQ\nhandlers registered during adf_isr_resource_alloc() are not detached\nbefore the MSI-X vectors are released.\n\nSince the device is enabled with pcim_enable_device(), calling\npci_alloc_irq_vectors() internally registers pcim_msi_release() as a\ndevres action. On probe failure, devres runs pcim_msi_release() which\ncalls pci_free_irq_vectors(), tearing down the MSI-X vectors while IRQ\nhandlers (for example 'qat0-bundle0') are still attached. This causes\nremove_proc_entry() warnings:\n\n    [   22.163964] remove_proc_entry: removing non-empty directory 'irq/143', leaking at least 'qat0-bundle0'\n\nMoving the devm_add_action_or_reset() before adf_dev_up() does not solve\nthe problem since devres runs in LIFO order and pcim_msi_release(),\nregistered later inside adf_dev_up(), would still fire before\nadf_device_down().\n\nFix by calling adf_dev_down() explicitly when adf_dev_up() fails, to\nproperly free IRQ handlers before devres releases the MSI-X vectors.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "infotainment",
+      "components": [
+        "Linux kernel",
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "wireless_connectivity",
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46060"
+    },
+    {
+      "id": "CVE-2026-48148",
+      "published": "2026-05-27",
+      "modified": "2026-05-27",
+      "cvss": null,
+      "severity": "UNKNOWN",
+      "description": "Budibase is an open-source low-code platform. Prior to 3.35.3,  the VectorDB configuration endpoint in Budibase accepts a host parameter that undergoes no validation against internal IP ranges, reserved hostnames, or URL schemes. Any authenticated user with builder-level access can supply an arbitrary host value such as 169.254.169.254 or localhost, causing the server to initiate outbound TCP connections to internal network addresses or cloud metadata endpoints on their behalf.This vulnerability is fixed in 3.35.3.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "backend_servers"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48148"
+    },
     {
       "id": "CVE-2026-25900",
       "published": "2026-05-26",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-27",
+      "cvss": 6.1,
+      "severity": "MEDIUM",
       "description": "Lack of output escaping leads to a XSS vector in the feed modules.",
       "matched_oems": [
         "renault"
@@ -25,9 +327,9 @@
     {
       "id": "CVE-2026-25901",
       "published": "2026-05-26",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-27",
+      "cvss": 6.1,
+      "severity": "MEDIUM",
       "description": "Lack of output escaping leads to a XSS vector in the multilingual associations component.",
       "matched_oems": [
         "renault"
@@ -47,9 +349,9 @@
     {
       "id": "CVE-2026-30894",
       "published": "2026-05-26",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-27",
+      "cvss": 6.1,
+      "severity": "MEDIUM",
       "description": "Lack of output escaping leads to a XSS vector in the content history component.",
       "matched_oems": [
         "renault"
@@ -65,9 +367,9 @@
     {
       "id": "CVE-2026-30895",
       "published": "2026-05-26",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-27",
+      "cvss": 6.1,
+      "severity": "MEDIUM",
       "description": "Lack of output escaping leads to a XSS vector in the readmore links for com_content.",
       "matched_oems": [
         "renault"
@@ -87,9 +389,9 @@
     {
       "id": "CVE-2026-35220",
       "published": "2026-05-26",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-27",
+      "cvss": 4.3,
+      "severity": "MEDIUM",
       "description": "Lack of CSRF token validation lead to a CSRF attack vector in the admin activation endpoint of com_users.",
       "matched_oems": [
         "renault"
@@ -226,9 +528,9 @@
     {
       "id": "CVE-2026-41071",
       "published": "2026-05-22",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-27",
+      "cvss": 8.1,
+      "severity": "HIGH",
       "description": "libheif is a HEIF and AVIF file format decoder and encoder. In versions 1.21.2 and prior, a crafted HEIF sequence file where the saiz box declares more samples than actually exist in the track's chunk table causes a heap-buffer-overflow (out-of-bounds read) in the SampleAuxInfoReader constructor. The SampleAuxInfoReader constructor iterates over saiz->get_num_samples() samples but doesn't validate that this count is consistent with the number of chunks in the chunks vector. When saiz declares more samples than the chunks cover, the loop increments current_chunk past chunks.size(), causing an out-of-bounds read on the chunks vector. The vulnerability is triggered during file parsing (heif_context_read_from_file) without any additional user interaction. Any application using libheif to open untrusted HEIF files is affected. This issue has been fixed in version 1.22.0.",
       "matched_oems": [
         "renault"
@@ -6363,6 +6665,26 @@
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-24888"
     },
     {
+      "id": "CVE-2026-24477",
+      "published": "2026-01-27",
+      "modified": "2026-01-28",
+      "cvss": 7.5,
+      "severity": "HIGH",
+      "description": "AnythingLLM is an application that turns pieces of content into context that any LLM can use as references during chatting. If AnythingLLM prior to version 1.10.0 is configured to use Qdrant as the vector database with an API key, this QdrantApiKey could be exposed in plain text to unauthenticated users via the `/api/setup-complete` endpoint. Leakage of QdrantApiKey allows an unauthenticated attacker full read/write access to the Qdrant vector database instance used by AnythingLLM. Since Qdrant often stores the core knowledge base for RAG in AnythingLLM, this can lead to complete compromise of the semantic search / retrieval functionality and indirect leakage of confidential uploaded documents. Version 1.10.0 patches the issue.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-24477"
+    },
+    {
       "id": "CVE-2025-15467",
       "published": "2026-01-27",
       "modified": "2026-05-07",
@@ -6385,26 +6707,6 @@
         "crypto_tls"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-15467"
-    },
-    {
-      "id": "CVE-2026-24477",
-      "published": "2026-01-27",
-      "modified": "2026-01-28",
-      "cvss": 7.5,
-      "severity": "HIGH",
-      "description": "AnythingLLM is an application that turns pieces of content into context that any LLM can use as references during chatting. If AnythingLLM prior to version 1.10.0 is configured to use Qdrant as the vector database with an API key, this QdrantApiKey could be exposed in plain text to unauthenticated users via the `/api/setup-complete` endpoint. Leakage of QdrantApiKey allows an unauthenticated attacker full read/write access to the Qdrant vector database instance used by AnythingLLM. Since Qdrant often stores the core knowledge base for RAG in AnythingLLM, this can lead to complete compromise of the semantic search / retrieval functionality and indirect leakage of confidential uploaded documents. Version 1.10.0 patches the issue.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": "bcm",
-      "components": [
-        "CAN"
-      ],
-      "categories": [],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-24477"
     },
     {
       "id": "CVE-2025-59472",
