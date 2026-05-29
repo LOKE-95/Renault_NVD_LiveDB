@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-28T07:04:42Z",
+  "generated_at": "2026-05-29T07:04:10Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 702,
+  "count": 730,
   "cves": [
     {
       "id": "CVE-2026-7533",
@@ -28,6 +28,30 @@
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-7533"
     },
     {
+      "id": "CVE-2026-7660",
+      "published": "2026-05-28",
+      "modified": "2026-05-28",
+      "cvss": 6.1,
+      "severity": "MEDIUM",
+      "description": "The Easy Updates Manager plugin for WordPress is vulnerable to Reflected Cross-Site Scripting via the 'paged' parameter in versions up to, and including, 9.0.20 This is due to insufficient input sanitization and output escaping in the pagination() function. This makes it possible for attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page granted they can trick an administrator into performing an action such as clicking on a link.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "easy link"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN",
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-7660"
+    },
+    {
       "id": "CVE-2026-9009",
       "published": "2026-05-28",
       "modified": "2026-05-28",
@@ -46,6 +70,653 @@
         "wireless_connectivity"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-9009"
+    },
+    {
+      "id": "CVE-2026-46141",
+      "published": "2026-05-28",
+      "modified": "2026-05-28",
+      "cvss": null,
+      "severity": "UNKNOWN",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npowerpc/xive: fix kmemleak caused by incorrect chip_data lookup\n\nThe kmemleak reports the following memory leak:\n\nUnreferenced object 0xc0000002a7fbc640 (size 64):\n  comm \"kworker/8:1\", pid 540, jiffies 4294937872\n  hex dump (first 32 bytes):\n    01 00 00 00 00 00 00 00 00 00 09 04 00 04 00 00  ................\n    00 00 a7 81 00 00 0a c0 00 00 08 04 00 04 00 00  ................\n  backtrace (crc 177d48f6):\n    __kmalloc_cache_noprof+0x520/0x730\n    xive_irq_alloc_data.constprop.0+0x40/0xe0\n    xive_irq_domain_alloc+0xd0/0x1b0\n    irq_domain_alloc_irqs_parent+0x44/0x6c\n    pseries_irq_domain_alloc+0x1cc/0x354\n    irq_domain_alloc_irqs_parent+0x44/0x6c\n    msi_domain_alloc+0xb0/0x220\n    irq_domain_alloc_irqs_locked+0x138/0x4d0\n    __irq_domain_alloc_irqs+0x8c/0xfc\n    __msi_domain_alloc_irqs+0x214/0x4d8\n    msi_domain_alloc_irqs_all_locked+0x70/0xf8\n    pci_msi_setup_msi_irqs+0x60/0x78\n    __pci_enable_msix_range+0x54c/0x98c\n    pci_alloc_irq_vectors_affinity+0x16c/0x1d4\n    nvme_pci_enable+0xac/0x9c0 [nvme]\n    nvme_probe+0x340/0x764 [nvme]\n\nThis occurs when allocating MSI-X vectors for an NVMe device. During\nallocation the XIVE code creates a struct xive_irq_data and stores it\nin irq_data->chip_data.\n\nWhen the MSI-X irqdomain is later freed, xive_irq_free_data() is\nresponsible for retrieving this structure and freeing it. However,\nafter commit cc0cc23babc9 (\"powerpc/xive: Untangle xive from child\ninterrupt controller drivers\"), xive_irq_free_data() retrieves the\nchip_data using irq_get_chip_data(), which looks up the data through\nthe child domain.\n\nThis is incorrect because the XIVE-specific irq data is associated with\nthe XIVE (parent) domain. As a result the lookup fails and the allocated\nstruct xive_irq_data is never freed, leading to the kmemleak report\nshown above.\n\nFix this by retrieving the irq_data from the correct domain using\nirq_domain_get_irq_data() and then accessing the chip_data via\nirq_data_get_irq_chip_data().",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "infotainment",
+      "components": [
+        "Linux kernel",
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "wireless_connectivity",
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46141"
+    },
+    {
+      "id": "CVE-2026-46171",
+      "published": "2026-05-28",
+      "modified": "2026-05-28",
+      "cvss": null,
+      "severity": "UNKNOWN",
+      "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nriscv: kvm: fix vector context allocation leak\n\nWhen the second kzalloc (host_context.vector.datap) fails in\nkvm_riscv_vcpu_alloc_vector_context, the first allocation\n(guest_context.vector.datap) is leaked. Free it before returning.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "infotainment",
+      "components": [
+        "Linux kernel",
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "infotainment_os"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46171"
+    },
+    {
+      "id": "CVE-2026-48525",
+      "published": "2026-05-28",
+      "modified": "2026-05-28",
+      "cvss": 5.3,
+      "severity": "MEDIUM",
+      "description": "PyJWT is a JSON Web Token implementation in Python. From 2.8.0 to 2.12.1, when verifying detached JWS tokens using the unencoded-payload option (\"b64\": false, RFC 7797), PyJWT performs Base64URL decoding of the compact-serialization payload segment before enforcing the detached-payload rules. For b64=false, PyJWT later discards that decoded payload and replaces it with the caller-provided detached_payload. In practice, this turns the middle segment into an attacker-controlled “work amplifier”: a remote client can supply an arbitrarily large Base64URL payload segment that forces CPU work + memory allocations even if the signature is invalid. This creates an unauthenticated DoS vector against any endpoint that verifies detached JWS using PyJWT. This vulnerability is fixed in 2.13.0.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-48525"
+    },
+    {
+      "id": "CVE-2026-34311",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.8,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in the Oracle Hospitality OPERA 5 Property Services product of Oracle Hospitality Applications (component: Opera).  Supported versions that are affected are 5.6.19.24, 5.6.22, 5.6.25.19, 5.6.27.6 and  5.6.28. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Hospitality OPERA 5 Property Services.  Successful attacks of this vulnerability can result in takeover of Oracle Hospitality OPERA 5 Property Services. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34311"
+    },
+    {
+      "id": "CVE-2026-35266",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 7.9,
+      "severity": "HIGH",
+      "description": "Vulnerability in Oracle REST Data Services (component: Core).  Supported versions that are affected are 24.2.0-26.1.0. Difficult to exploit vulnerability allows low privileged attacker with network access via HTTPS to compromise Oracle REST Data Services.  Successful attacks require human interaction from a person other than the attacker and while the vulnerability is in Oracle REST Data Services, attacks may significantly impact additional products (scope change). Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle REST Data Services accessible data as well as  unauthorized access to critical data or complete access to all Oracle REST Data Services accessible data and unauthorized ability to cause a partial denial of service (partial DOS) of Oracle REST Data Services. CVSS 3.1 Base Score 7.9 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:H/I:H/A:L).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-35266"
+    },
+    {
+      "id": "CVE-2026-35277",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 8.1,
+      "severity": "HIGH",
+      "description": "Vulnerability in Oracle REST Data Services (component: Core).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTPS to compromise Oracle REST Data Services.  Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle REST Data Services accessible data as well as  unauthorized access to critical data or complete access to all Oracle REST Data Services accessible data. CVSS 3.1 Base Score 8.1 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-35277"
+    },
+    {
+      "id": "CVE-2026-46775",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.9,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in Oracle REST Data Services (component: Core).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTPS to compromise Oracle REST Data Services.  While the vulnerability is in Oracle REST Data Services, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in takeover of Oracle REST Data Services. CVSS 3.1 Base Score 9.9 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46775"
+    },
+    {
+      "id": "CVE-2026-46817",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.8,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in the Oracle Payments product of Oracle E-Business Suite (component: File Transmission).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Payments.  Successful attacks of this vulnerability can result in takeover of Oracle Payments. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46817"
+    },
+    {
+      "id": "CVE-2026-46818",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 7.4,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Payments product of Oracle E-Business Suite (component: File Transmission).  Supported versions that are affected are 12.2.3-12.2.15. Difficult to exploit vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle Payments.  Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle Payments accessible data as well as  unauthorized access to critical data or complete access to all Oracle Payments accessible data. CVSS 3.1 Base Score 7.4 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46818"
+    },
+    {
+      "id": "CVE-2026-46819",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.1,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in the Oracle Internet Procurement Connector product of Oracle E-Business Suite (component: Internal Operations).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Internet Procurement Connector.  Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle Internet Procurement Connector accessible data as well as  unauthorized access to critical data or complete access to all Oracle Internet Procurement Connector accessible data. CVSS 3.1 Base Score 9.1 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46819"
+    },
+    {
+      "id": "CVE-2026-46820",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 8.5,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Financials Common Modules product of Oracle E-Business Suite (component: Common Components).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Financials Common Modules.  While the vulnerability is in Oracle Financials Common Modules, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle Financials Common Modules accessible data as well as  unauthorized update, insert or delete access to some of Oracle Financials Common Modules accessible data. CVSS 3.1 Base Score 8.5 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46820"
+    },
+    {
+      "id": "CVE-2026-46821",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 7.7,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Financials Common Modules product of Oracle E-Business Suite (component: Common Components).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Financials Common Modules.  While the vulnerability is in Oracle Financials Common Modules, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle Financials Common Modules accessible data. CVSS 3.1 Base Score 7.7 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46821"
+    },
+    {
+      "id": "CVE-2026-46822",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.9,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in the Oracle iAssets product of Oracle E-Business Suite (component: Internal Operations).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle iAssets.  While the vulnerability is in Oracle iAssets, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in takeover of Oracle iAssets. CVSS 3.1 Base Score 9.9 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46822"
+    },
+    {
+      "id": "CVE-2026-46823",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 7.7,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Public Sector Financials (International) product of Oracle E-Business Suite (component: Authorization).  Supported versions that are affected are 12.2.6-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTPS to compromise Oracle Public Sector Financials (International).  While the vulnerability is in Oracle Public Sector Financials (International), attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle Public Sector Financials (International) accessible data. CVSS 3.1 Base Score 7.7 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46823"
+    },
+    {
+      "id": "CVE-2026-46824",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.9,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in the Oracle Universal Work Queue product of Oracle E-Business Suite (component: Work Provider Site Level Administration).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Universal Work Queue.  While the vulnerability is in Oracle Universal Work Queue, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in takeover of Oracle Universal Work Queue. CVSS 3.1 Base Score 9.9 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46824"
+    },
+    {
+      "id": "CVE-2026-46826",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 8.8,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Payroll product of Oracle E-Business Suite (component: Internal Operations).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTPS to compromise Oracle Payroll.  Successful attacks of this vulnerability can result in takeover of Oracle Payroll. CVSS 3.1 Base Score 8.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46826"
+    },
+    {
+      "id": "CVE-2026-46827",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 8.8,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Payroll product of Oracle E-Business Suite (component: Self Service Manager).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Payroll.  Successful attacks of this vulnerability can result in takeover of Oracle Payroll. CVSS 3.1 Base Score 8.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46827"
+    },
+    {
+      "id": "CVE-2026-46828",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 8.1,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Payroll product of Oracle E-Business Suite (component: Internal Operations).  Supported versions that are affected are 12.2.3-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Payroll.  Successful attacks of this vulnerability can result in  unauthorized creation, deletion or modification access to critical data or all Oracle Payroll accessible data as well as  unauthorized access to critical data or complete access to all Oracle Payroll accessible data. CVSS 3.1 Base Score 8.1 (Confidentiality and Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46828"
+    },
+    {
+      "id": "CVE-2026-46829",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 7.5,
+      "severity": "HIGH",
+      "description": "Vulnerability in Oracle REST Data Services (component: Mongoapi).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle REST Data Services.  Successful attacks of this vulnerability can result in unauthorized ability to cause a hang or frequently repeatable crash (complete DOS) of Oracle REST Data Services. CVSS 3.1 Base Score 7.5 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46829"
+    },
+    {
+      "id": "CVE-2026-46830",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 5.3,
+      "severity": "MEDIUM",
+      "description": "Vulnerability in Oracle REST Data Services (component: Mongoapi).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle REST Data Services.  Successful attacks of this vulnerability can result in  unauthorized read access to a subset of Oracle REST Data Services accessible data. CVSS 3.1 Base Score 5.3 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46830"
+    },
+    {
+      "id": "CVE-2026-46833",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.0,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in the Net Service component of Oracle Database Server.  Supported versions that are affected are 23.4.0-23.26.2. Difficult to exploit vulnerability allows unauthenticated attacker with network access via TLS to compromise Net Service.  While the vulnerability is in Net Service, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in takeover of Net Service. CVSS 3.1 Base Score 9.0 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "telematics",
+      "components": [
+        "TLS",
+        "CAN"
+      ],
+      "categories": [
+        "crypto_tls"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46833"
+    },
+    {
+      "id": "CVE-2026-46834",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 7.5,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Net Service component of Oracle Database Server.  Supported versions that are affected are 23.4.0-23.26.2. Easily exploitable vulnerability allows unauthenticated attacker with network access via TLS to compromise Net Service.  Successful attacks of this vulnerability can result in unauthorized ability to cause a hang or frequently repeatable crash (complete DOS) of Net Service. CVSS 3.1 Base Score 7.5 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "telematics",
+      "components": [
+        "TLS",
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity",
+        "crypto_tls"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46834"
+    },
+    {
+      "id": "CVE-2026-46835",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 7.5,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Net Service component of Oracle Database Server.  Supported versions that are affected are 23.4.0-23.26.2. Easily exploitable vulnerability allows unauthenticated attacker with network access via TLS to compromise Net Service.  Successful attacks of this vulnerability can result in unauthorized ability to cause a hang or frequently repeatable crash (complete DOS) of Net Service. CVSS 3.1 Base Score 7.5 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "telematics",
+      "components": [
+        "TLS",
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity",
+        "crypto_tls"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46835"
+    },
+    {
+      "id": "CVE-2026-46837",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 8.8,
+      "severity": "HIGH",
+      "description": "Vulnerability in the Oracle Flow Manufacturing product of Oracle E-Business Suite (component: Security).  Supported versions that are affected are 12.2.9-12.2.15. Easily exploitable vulnerability allows low privileged attacker with network access via SQL to compromise Oracle Flow Manufacturing.  Successful attacks of this vulnerability can result in takeover of Oracle Flow Manufacturing. CVSS 3.1 Base Score 8.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46837"
+    },
+    {
+      "id": "CVE-2026-46839",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 9.9,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in Oracle REST Data Services (component: Core).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows low privileged attacker with network access via HTTPS to compromise Oracle REST Data Services.  While the vulnerability is in Oracle REST Data Services, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in takeover of Oracle REST Data Services. CVSS 3.1 Base Score 9.9 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46839"
+    },
+    {
+      "id": "CVE-2026-46840",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 10.0,
+      "severity": "CRITICAL",
+      "description": "Vulnerability in Oracle REST Data Services (component: Backend-as-a-Service).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle REST Data Services.  While the vulnerability is in Oracle REST Data Services, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in takeover of Oracle REST Data Services. CVSS 3.1 Base Score 10.0 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity",
+        "backend_servers"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46840"
+    },
+    {
+      "id": "CVE-2026-46841",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 5.3,
+      "severity": "MEDIUM",
+      "description": "Vulnerability in Oracle REST Data Services (component: General).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle REST Data Services.  Successful attacks of this vulnerability can result in  unauthorized read access to a subset of Oracle REST Data Services accessible data. CVSS 3.1 Base Score 5.3 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46841"
+    },
+    {
+      "id": "CVE-2026-46842",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 5.3,
+      "severity": "MEDIUM",
+      "description": "Vulnerability in Oracle REST Data Services (component: Core).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle REST Data Services.  Successful attacks of this vulnerability can result in  unauthorized update, insert or delete access to some of Oracle REST Data Services accessible data. CVSS 3.1 Base Score 5.3 (Integrity impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46842"
+    },
+    {
+      "id": "CVE-2026-46843",
+      "published": "2026-05-28",
+      "modified": "2026-05-29",
+      "cvss": 5.3,
+      "severity": "MEDIUM",
+      "description": "Vulnerability in Oracle REST Data Services (component: Core).  Supported versions that are affected are 24.2.0-26.1.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTPS to compromise Oracle REST Data Services.  Successful attacks of this vulnerability can result in unauthorized ability to cause a partial denial of service (partial DOS) of Oracle REST Data Services. CVSS 3.1 Base Score 5.3 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L).",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN"
+      ],
+      "categories": [
+        "wireless_connectivity"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-46843"
     },
     {
       "id": "CVE-2023-52945",
@@ -92,7 +763,7 @@
     {
       "id": "CVE-2024-47267",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-28",
       "cvss": 2.7,
       "severity": "LOW",
       "description": "Improper limitation of a pathname to a restricted directory ('Path Traversal') vulnerability in Archiving Pull functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to limited file write via unspecified vectors.",
@@ -110,7 +781,7 @@
     {
       "id": "CVE-2024-47268",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-28",
       "cvss": 4.9,
       "severity": "MEDIUM",
       "description": "Missing authorization vulnerability in AddOns functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to obtain sensitive information via unspecified vectors.",
@@ -128,7 +799,7 @@
     {
       "id": "CVE-2024-47269",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-28",
       "cvss": 4.9,
       "severity": "MEDIUM",
       "description": "Cleartext transmission of sensitive information vulnerability in Export Key functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to obtain sensitive information via unspecified vectors.",
@@ -146,7 +817,7 @@
     {
       "id": "CVE-2024-47270",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-28",
       "cvss": 2.7,
       "severity": "LOW",
       "description": "Improper preservation of permissions vulnerability in Archiving Push functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to limited file write via unspecified vectors.",
@@ -164,7 +835,7 @@
     {
       "id": "CVE-2024-47271",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-28",
       "cvss": 4.9,
       "severity": "MEDIUM",
       "description": "Insufficiently protected credentials vulnerability in IPSpeaker component in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to obtain sensitive information via unspecified vectors.",
@@ -182,7 +853,7 @@
     {
       "id": "CVE-2024-47272",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-28",
       "cvss": 2.7,
       "severity": "LOW",
       "description": "Incorrect authorization vulnerability in IO Module functionality in Synology Surveillance Station before 9.2.2-11575 and 9.2.2-9575 allows remote authenticated users with administrator privileges to limited file write via unspecified vectors.",
@@ -218,7 +889,7 @@
     {
       "id": "CVE-2025-13167",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-28",
       "cvss": 5.4,
       "severity": "MEDIUM",
       "description": "Improper neutralization of input during web page generation ('Cross-site Scripting') vulnerability in contact functionality in Synology Contacts before 1.0.10-20659 allows remote authenticated users to read or write specific files containing non-sensitive information via unspecified vectors.",
@@ -407,9 +1078,9 @@
     {
       "id": "CVE-2026-48896",
       "published": "2026-05-26",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-28",
+      "cvss": 7.5,
+      "severity": "HIGH",
       "description": "Insufficient state checks lead to a vector that allows to bypass 2FA checks.",
       "matched_oems": [
         "renault"
@@ -425,9 +1096,9 @@
     {
       "id": "CVE-2026-48897",
       "published": "2026-05-26",
-      "modified": "2026-05-26",
-      "cvss": null,
-      "severity": "UNKNOWN",
+      "modified": "2026-05-28",
+      "cvss": 7.5,
+      "severity": "HIGH",
       "description": "Insufficient state checks lead to a vector that allows to bypass 2FA checks.",
       "matched_oems": [
         "renault"
@@ -1616,24 +2287,6 @@
       "components": [],
       "categories": [],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-41957"
-    },
-    {
-      "id": "CVE-2026-44277",
-      "published": "2026-05-12",
-      "modified": "2026-05-15",
-      "cvss": 9.8,
-      "severity": "CRITICAL",
-      "description": "A improper access control vulnerability in Fortinet FortiAuthenticator 8.0.2, FortiAuthenticator 8.0.0, FortiAuthenticator 6.6.0 through 6.6.8, FortiAuthenticator 6.5.0 through 6.5.6 may allow attacker to execute unauthorized code or commands via <insert attack vector here>",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": null,
-      "components": [],
-      "categories": [],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44277"
     },
     {
       "id": "CVE-2026-44278",
@@ -15224,24 +15877,6 @@
         "wireless_connectivity"
       ],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-48936"
-    },
-    {
-      "id": "CVE-2025-3755",
-      "published": "2025-05-29",
-      "modified": "2026-04-15",
-      "cvss": 9.1,
-      "severity": "CRITICAL",
-      "description": "Improper Validation of Specified Index, Position, or Offset in Input vulnerability in Mitsubishi Electric Corporation MELSEC iQ-F Series CPU modules allows a remote unauthenticated attacker to read information in the product, to cause a Denial-of-Service (DoS) condition in MELSOFT connection, or to stop the operation of the CPU module (causing a DoS condtion on the CPU module), by sending specially crafted packets. The product is needed to reset for recovery.",
-      "matched_oems": [
-        "maruti_suzuki"
-      ],
-      "matched_keywords": [
-        "Mitsubishi Electric"
-      ],
-      "ecu_class": null,
-      "components": [],
-      "categories": [],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3755"
     }
   ]
 }
