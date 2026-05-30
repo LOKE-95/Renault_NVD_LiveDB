@@ -1,9 +1,33 @@
 {
-  "generated_at": "2026-05-29T07:04:10Z",
+  "generated_at": "2026-05-30T06:30:23Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 730,
+  "count": 731,
   "cves": [
+    {
+      "id": "CVE-2026-10105",
+      "published": "2026-05-29",
+      "modified": "2026-05-29",
+      "cvss": 8.3,
+      "severity": "HIGH",
+      "description": "agno 2.6.5 contains a SQL injection vulnerability in the ClickHouse vector database backend that allows attackers to inject arbitrary SQL expressions by supplying malicious metadata keys and values to the delete_by_metadata() method. Attackers can exploit the unsafe f-string interpolation in clickhousedb.py to delete all rows, target specific rows, or extract information through error-based or blind SQL injection techniques.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": "bcm",
+      "components": [
+        "CAN",
+        "LIN"
+      ],
+      "categories": [
+        "in_vehicle_network",
+        "backend_servers"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-10105"
+    },
     {
       "id": "CVE-2026-7533",
       "published": "2026-05-28",
@@ -721,7 +745,7 @@
     {
       "id": "CVE-2023-52945",
       "published": "2026-05-27",
-      "modified": "2026-05-27",
+      "modified": "2026-05-29",
       "cvss": 7.8,
       "severity": "HIGH",
       "description": "Uncontrolled search path element vulnerability in OpenSSL DLL component in Synology BeeDrive for desktop before 1.3.2-13814 allows local users to execute arbitrary code via unspecified vectors.",
