@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-30T06:30:23Z",
+  "generated_at": "2026-05-31T07:04:44Z",
   "source": "nvd-cve-2.0",
   "lookback_days": 365,
-  "count": 731,
+  "count": 730,
   "cves": [
     {
       "id": "CVE-2026-10105",
@@ -15776,26 +15776,6 @@
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-13090"
     },
     {
-      "id": "CVE-2025-1793",
-      "published": "2025-06-05",
-      "modified": "2025-07-30",
-      "cvss": 9.8,
-      "severity": "CRITICAL",
-      "description": "Multiple vector store integrations in run-llama/llama_index version v0.12.21 have SQL injection vulnerabilities. These vulnerabilities allow an attacker to read and write data using SQL, potentially leading to unauthorized access to data of other users depending on the usage of the llama-index library in a web application.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": null,
-      "components": [],
-      "categories": [
-        "supply_chain"
-      ],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-1793"
-    },
-    {
       "id": "CVE-2025-5702",
       "published": "2025-06-05",
       "modified": "2025-10-01",
@@ -15838,6 +15818,26 @@
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-5745"
     },
     {
+      "id": "CVE-2025-1793",
+      "published": "2025-06-05",
+      "modified": "2025-07-30",
+      "cvss": 9.8,
+      "severity": "CRITICAL",
+      "description": "Multiple vector store integrations in run-llama/llama_index version v0.12.21 have SQL injection vulnerabilities. These vulnerabilities allow an attacker to read and write data using SQL, potentially leading to unauthorized access to data of other users depending on the usage of the llama-index library in a web application.",
+      "matched_oems": [
+        "renault"
+      ],
+      "matched_keywords": [
+        "Vector"
+      ],
+      "ecu_class": null,
+      "components": [],
+      "categories": [
+        "supply_chain"
+      ],
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-1793"
+    },
+    {
       "id": "CVE-2025-1701",
       "published": "2025-06-04",
       "modified": "2026-04-15",
@@ -15877,30 +15877,6 @@
       ],
       "categories": [],
       "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-49007"
-    },
-    {
-      "id": "CVE-2025-48936",
-      "published": "2025-05-30",
-      "modified": "2025-06-04",
-      "cvss": 8.1,
-      "severity": "HIGH",
-      "description": "Zitadel is open-source identity infrastructure software. Prior to versions 2.70.12, 2.71.10, and 3.2.2, a potential vulnerability exists in the password reset mechanism. ZITADEL utilizes the Forwarded or X-Forwarded-Host header from incoming requests to construct the URL for the password reset confirmation link. This link, containing a secret code, is then emailed to the user. If an attacker can manipulate these headers (e.g., via host header injection), they could cause ZITADEL to generate a password reset link pointing to a malicious domain controlled by the attacker. If the user clicks this manipulated link in the email, the secret reset code embedded in the URL can be captured by the attacker. This captured code could then be used to reset the user's password and gain unauthorized access to their account. This specific attack vector is mitigated for accounts that have Multi-Factor Authentication (MFA) or Passwordless authentication enabled. This issue has been patched in versions 2.70.12, 2.71.10, and 3.2.2.",
-      "matched_oems": [
-        "renault"
-      ],
-      "matched_keywords": [
-        "Vector"
-      ],
-      "ecu_class": "bcm",
-      "components": [
-        "CAN",
-        "LIN"
-      ],
-      "categories": [
-        "in_vehicle_network",
-        "wireless_connectivity"
-      ],
-      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-48936"
     }
   ]
 }
