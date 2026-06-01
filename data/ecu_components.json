@@ -1,4 +1,441 @@
 {
+  "toyota": {
+    "display_name": "Toyota",
+    "keywords": [
+      "toyota",
+      "lexus",
+      "t-connect",
+      "entune",
+      "toyota connected",
+      "g-link",
+      "toyota safety sense"
+    ],
+    "suppliers": [
+      "Denso",
+      "Aisin",
+      "Panasonic Automotive",
+      "Toyota Industries"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / Display Audio",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Apple CarPlay", "Android Auto"]
+      },
+      "telematics": {
+        "label": "Telematics / T-Connect",
+        "components": ["LTE modem", "MQTT", "OpenSSL", "TLS", "HTTPS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "SOME/IP", "DoIP", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / Toyota Safety Sense",
+        "components": ["camera ECU", "radar ECU", "lidar ECU", "Mobileye"]
+      },
+      "powertrain": {
+        "label": "Powertrain / Hybrid ECU",
+        "components": ["BMS", "hybrid ECU", "motor controller", "inverter ECU"]
+      }
+    }
+  },
+  "volkswagen": {
+    "display_name": "Volkswagen Group",
+    "keywords": [
+      "volkswagen",
+      "vw group",
+      "cariad",
+      "mib3",
+      "mib2",
+      "vw connect",
+      "audi connect",
+      "porsche connect",
+      "we connect"
+    ],
+    "suppliers": [
+      "Bosch",
+      "Continental",
+      "Harman",
+      "Elektrobit",
+      "ZF Friedrichshafen"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / MIB3",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Qt"]
+      },
+      "telematics": {
+        "label": "Telematics / We Connect",
+        "components": ["LTE modem", "OpenSSL", "TLS", "MQTT", "HTTPS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "AUTOSAR Adaptive", "SOME/IP", "DoIP", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS", "FlexRay"]
+      },
+      "adas": {
+        "label": "ADAS / Autonomous Driving",
+        "components": ["camera ECU", "radar ECU", "lidar ECU", "sensor fusion ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "VCU", "motor controller"]
+      }
+    }
+  },
+  "stellantis": {
+    "display_name": "Stellantis",
+    "keywords": [
+      "stellantis",
+      "uconnect",
+      "fiat chrysler",
+      "fca",
+      "jeep",
+      "dodge",
+      "chrysler",
+      "uconnect 5"
+    ],
+    "suppliers": [
+      "Aptiv",
+      "Marelli",
+      "Bosch",
+      "Valeo",
+      "Continental"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / Uconnect",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Apple CarPlay"]
+      },
+      "telematics": {
+        "label": "Telematics / Connected Services",
+        "components": ["LTE modem", "MQTT", "OpenSSL", "TLS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "SOME/IP", "DoIP", "CAN"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / SafetyGuard",
+        "components": ["camera ECU", "radar ECU", "sensor fusion ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "VCU"]
+      }
+    }
+  },
+  "mercedes": {
+    "display_name": "Mercedes-Benz",
+    "keywords": [
+      "mercedes-benz",
+      "mbux",
+      "mercedes me",
+      "command online",
+      "mb star",
+      "mercedes benz"
+    ],
+    "suppliers": [
+      "Harman",
+      "Bosch",
+      "Continental",
+      "NXP Semiconductors"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / MBUX",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Qt"]
+      },
+      "telematics": {
+        "label": "Telematics / Mercedes me",
+        "components": ["LTE modem", "OpenSSL", "TLS", "HTTPS", "MQTT"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Adaptive", "AUTOSAR Classic", "SOME/IP", "DoIP", "Ethernet"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS", "FlexRay"]
+      },
+      "adas": {
+        "label": "ADAS / Drive Pilot",
+        "components": ["camera ECU", "radar ECU", "lidar ECU", "sensor fusion ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "motor controller"]
+      }
+    }
+  },
+  "ford": {
+    "display_name": "Ford",
+    "keywords": [
+      "ford motor",
+      "ford sync",
+      "fordpass",
+      "sync 4",
+      "ford bluecruise",
+      "ford pro"
+    ],
+    "suppliers": [
+      "Aptiv",
+      "Bosch",
+      "Continental",
+      "Harman"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / SYNC 4",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Apple CarPlay"]
+      },
+      "telematics": {
+        "label": "Telematics / FordPass Connect",
+        "components": ["LTE modem", "MQTT", "OpenSSL", "TLS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "SOME/IP", "DoIP", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / BlueCruise",
+        "components": ["camera ECU", "radar ECU", "lidar ECU", "Mobileye"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "VCU", "motor controller"]
+      }
+    }
+  },
+  "gm": {
+    "display_name": "General Motors",
+    "keywords": [
+      "general motors",
+      "onstar",
+      "gmc terrain",
+      "chevrolet mylink",
+      "gm infotainment",
+      "super cruise"
+    ],
+    "suppliers": [
+      "LG Electronics",
+      "Aptiv",
+      "Bosch",
+      "Continental"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / Infotainment 3",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Apple CarPlay"]
+      },
+      "telematics": {
+        "label": "Telematics / OnStar",
+        "components": ["LTE modem", "MQTT", "OpenSSL", "TLS", "HTTPS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "SOME/IP", "DoIP", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / Super Cruise",
+        "components": ["camera ECU", "radar ECU", "lidar ECU", "sensor fusion ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / Ultium BMS",
+        "components": ["BMS", "inverter ECU", "VCU", "motor controller"]
+      }
+    }
+  },
+  "bmw": {
+    "display_name": "BMW Group",
+    "keywords": [
+      "bmw",
+      "bmw connecteddrive",
+      "bmw idrive",
+      "mini connected",
+      "bmw operating system",
+      "bmw group"
+    ],
+    "suppliers": [
+      "Harman",
+      "Continental",
+      "Bosch",
+      "Aptiv"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / iDrive 8",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Qt"]
+      },
+      "telematics": {
+        "label": "Telematics / ConnectedDrive",
+        "components": ["LTE modem", "OpenSSL", "TLS", "HTTPS", "MQTT"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Adaptive", "AUTOSAR Classic", "SOME/IP", "DoIP", "Ethernet"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS", "FlexRay"]
+      },
+      "adas": {
+        "label": "ADAS / Driving Assistance Pro",
+        "components": ["camera ECU", "radar ECU", "lidar ECU", "Mobileye"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "motor controller"]
+      }
+    }
+  },
+  "hyundai": {
+    "display_name": "Hyundai / Kia",
+    "keywords": [
+      "hyundai",
+      "kia",
+      "bluelink",
+      "hyundai ccsp",
+      "kia connect",
+      "ioniq",
+      "genesis connected"
+    ],
+    "suppliers": [
+      "Hyundai Mobis",
+      "Aptiv",
+      "Harman",
+      "Continental"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / ccNC",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Apple CarPlay"]
+      },
+      "telematics": {
+        "label": "Telematics / BlueLink",
+        "components": ["LTE modem", "MQTT", "OpenSSL", "TLS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "SOME/IP", "DoIP", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / Highway Driving Assist",
+        "components": ["camera ECU", "radar ECU", "lidar ECU", "sensor fusion ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / EV BMS",
+        "components": ["BMS", "inverter ECU", "VCU", "motor controller"]
+      }
+    }
+  },
+  "honda": {
+    "display_name": "Honda",
+    "keywords": [
+      "honda",
+      "hondalink",
+      "honda connect",
+      "honda sensing",
+      "acura link"
+    ],
+    "suppliers": [
+      "Denso",
+      "Bosch",
+      "Alpine Electronics",
+      "Panasonic Automotive"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / Honda Connect",
+        "components": ["Android Automotive", "Linux kernel", "WebKit", "Bluetooth", "Wi-Fi", "Apple CarPlay"]
+      },
+      "telematics": {
+        "label": "Telematics / HondaLink",
+        "components": ["LTE modem", "MQTT", "OpenSSL", "TLS"]
+      },
+      "gateway": {
+        "label": "Central gateway",
+        "components": ["AUTOSAR Classic", "SOME/IP", "CAN", "CAN-FD"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / Honda Sensing 360",
+        "components": ["camera ECU", "radar ECU", "sensor fusion ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / e:HEV BMS",
+        "components": ["BMS", "hybrid ECU", "motor controller", "inverter ECU"]
+      }
+    }
+  },
+  "tesla": {
+    "display_name": "Tesla",
+    "keywords": [
+      "tesla",
+      "tesla autopilot",
+      "tesla fsd",
+      "tesla model",
+      "tesla energy",
+      "tesla vehicle"
+    ],
+    "suppliers": [
+      "Nvidia",
+      "Samsung",
+      "Panasonic Automotive"
+    ],
+    "ecu_classes": {
+      "infotainment": {
+        "label": "Infotainment / MCU",
+        "components": ["Linux kernel", "WebKit", "Chromium", "Bluetooth", "Wi-Fi"]
+      },
+      "telematics": {
+        "label": "Telematics / Over-the-Air",
+        "components": ["LTE modem", "OpenSSL", "TLS", "HTTPS", "OTA agent"]
+      },
+      "gateway": {
+        "label": "Central gateway / CAN gateway",
+        "components": ["CAN", "CAN-FD", "Ethernet", "DoIP"]
+      },
+      "bcm": {
+        "label": "Body control module",
+        "components": ["CAN", "LIN", "UDS"]
+      },
+      "adas": {
+        "label": "ADAS / Full Self-Driving",
+        "components": ["camera ECU", "radar ECU", "neural network processor", "sensor fusion ECU"]
+      },
+      "powertrain": {
+        "label": "Powertrain / BMS",
+        "components": ["BMS", "inverter ECU", "motor controller", "VCU"]
+      }
+    }
+  },
   "renault": {
     "display_name": "Renault",
     "keywords": [
@@ -105,7 +542,7 @@
       "Harman",
       "Bosch",
       "Continental",
-      "Panasonic",
+      "Panasonic Automotive",
       "Mitsubishi Electric"
     ],
     "ecu_classes": {

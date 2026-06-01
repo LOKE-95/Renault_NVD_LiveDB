@@ -208,7 +208,17 @@ function populateEcuFilter() {
 }
 
 function wireOemFilter() {
-  document.getElementById("oem-filter").addEventListener("click", (e) => {
+  const nav = document.getElementById("oem-filter");
+  // Dynamically inject one chip per OEM from ecuMap
+  for (const [oemId, oem] of Object.entries(state.ecuMap)) {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.dataset.oem = oemId;
+    btn.textContent = oem.display_name || oemId;
+    nav.appendChild(btn);
+  }
+
+  nav.addEventListener("click", (e) => {
     const btn = e.target.closest("button.chip");
     if (!btn) return;
     document.querySelectorAll("#oem-filter .chip").forEach(c => c.classList.remove("active"));
