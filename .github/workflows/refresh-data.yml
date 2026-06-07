@@ -14,6 +14,10 @@ on:
 permissions:
   contents: write
 
+env:
+  # Suppress Node.js 20 deprecation warnings from GitHub-hosted actions
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -25,7 +29,7 @@ jobs:
         uses: actions/setup-python@v5.3.0
         with:
           python-version: "3.11"
-          cache: pip
+          # pip cache disabled — avoids intermittent cache-service 400 errors
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -44,7 +48,7 @@ jobs:
           NVD_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '365' }}
         run: python scripts/fetch_nvd.py
 
-      - name: Mark fetch as skipped (key invalid)
+      - name: Mark fetch as skipped (key invalid / NVD unreachable)
         if: steps.validate.outcome != 'success'
         run: |
           python - <<'PY'
@@ -52,7 +56,7 @@ jobs:
           from datetime import datetime, timezone
           path = "data/health.json"
           try:
-              data = json.load(open(path))
+              data = json.load(open(path, encoding="utf-8"))
           except Exception:
               data = {}
           data.setdefault("key", {"status": "unknown"})
@@ -60,10 +64,11 @@ jobs:
               "status": "skipped",
               "ran_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
               "cve_count": (data.get("fetch") or {}).get("cve_count"),
-              "message": "Fetch skipped because the API key validation failed."
+              "message": "Fetch skipped: API key validation failed or NVD temporarily unreachable."
           }
-          json.dump(data, open(path, "w"), indent=2)
-          open(path, "a").write("\n")
+          with open(path, "w", encoding="utf-8") as f:
+              json.dump(data, f, indent=2)
+              f.write("\n")
           PY
 
       - name: Commit updated data

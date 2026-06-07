@@ -208,16 +208,8 @@ function populateEcuFilter() {
 }
 
 function wireOemFilter() {
+  // Chips are hardcoded in index.html — just wire the click handler
   const nav = document.getElementById("oem-filter");
-  // Dynamically inject one chip per OEM from ecuMap
-  for (const [oemId, oem] of Object.entries(state.ecuMap)) {
-    const btn = document.createElement("button");
-    btn.className = "chip";
-    btn.dataset.oem = oemId;
-    btn.textContent = oem.display_name || oemId;
-    nav.appendChild(btn);
-  }
-
   nav.addEventListener("click", (e) => {
     const btn = e.target.closest("button.chip");
     if (!btn) return;

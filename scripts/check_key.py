@@ -7,25 +7,10 @@ data/health.json so the dashboard can show a live status pill.
 Behavior:
 - Reads NVD_API_KEY from the environment (provided by GitHub Actions secret).
 - Requests 1 record from NVD with the key in the apiKey header.
+- Retries up to 3 times on 429 / 5xx before giving up.
 - Inspects the response status and X-RateLimit-Limit header.
-- Writes (or merges into) data/health.json:
-    {
-      "checked_at": "<ISO timestamp>",
-      "key": {
-        "status": "valid" | "invalid" | "missing" | "error",
-        "message": "<human-readable>",
-        "rate_limit": <int|null>,
-        "http_status": <int|null>
-      },
-      "fetch": { ...preserved from previous run if any... }
-    }
-- Exits 0 on valid, non-zero on missing/invalid/error so the workflow can
-  decide whether to skip the heavy fetch step.
-
-Run locally:
-    pip install -r requirements.txt
-    export NVD_API_KEY="your-key"     # PowerShell: $env:NVD_API_KEY="your-key"
-    python scripts/check_key.py
+- Writes (or merges into) data/health.json.
+- Exits 0 on valid, non-zero on missing/invalid/error.
 """
 
 from __future__ import annotations
@@ -33,15 +18,18 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import requests
 
-NVD_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
-ROOT = Path(__file__).resolve().parents[1]
+NVD_URL   = "https://services.nvd.nist.gov/rest/json/cves/2.0"
+ROOT      = Path(__file__).resolve().parents[1]
 HEALTH_FILE = ROOT / "data" / "health.json"
+MAX_RETRIES = 3
+RETRY_SLEEP = 8  # seconds between retries on 429 / 5xx
 
 
 def now_iso() -> str:
@@ -64,9 +52,26 @@ def write_health(payload: dict[str, Any]) -> None:
         f.write("\n")
 
 
+def ping_nvd(api_key: str):
+    """Return requests.Response. Retries on 429 / 5xx up to MAX_RETRIES times."""
+    headers = {"apiKey": api_key, "User-Agent": "automotive-cyber-dashboard/1.0"}
+    params  = {"resultsPerPage": 1, "startIndex": 0}
+    last_resp = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        resp = requests.get(NVD_URL, headers=headers, params=params, timeout=20)
+        last_resp = resp
+        if resp.status_code == 429 or (500 <= resp.status_code < 600):
+            wait = RETRY_SLEEP * attempt
+            print(f"[check_key] HTTP {resp.status_code} on attempt {attempt}/{MAX_RETRIES} — retrying in {wait}s")
+            time.sleep(wait)
+            continue
+        break  # 2xx, 401, 403 — no retry
+    return last_resp
+
+
 def main() -> int:
     existing = load_existing()
-    api_key = os.environ.get("NVD_API_KEY", "").strip()
+    api_key  = os.environ.get("NVD_API_KEY", "").strip()
 
     payload: dict[str, Any] = {
         "checked_at": now_iso(),
@@ -85,12 +90,7 @@ def main() -> int:
         return 2
 
     try:
-        resp = requests.get(
-            NVD_URL,
-            headers={"apiKey": api_key, "User-Agent": "automotive-cyber-dashboard/1.0"},
-            params={"resultsPerPage": 1, "startIndex": 0},
-            timeout=20,
-        )
+        resp = ping_nvd(api_key)
     except requests.RequestException as e:
         payload["key"] = {
             "status": "error",
@@ -113,7 +113,7 @@ def main() -> int:
             "status": "invalid",
             "message": (
                 f"NVD rejected the key (HTTP {resp.status_code}). "
-                "Check the value of the NVD_API_KEY secret and that you've "
+                "Check the value of the NVD_API_KEY secret and that you have "
                 "clicked the activation link NIST emailed when you registered."
             ),
             "rate_limit": rate_limit,
@@ -123,10 +123,21 @@ def main() -> int:
         print(f"[check_key] invalid key (HTTP {resp.status_code})")
         return 4
 
+    if resp.status_code == 429:
+        payload["key"] = {
+            "status": "error",
+            "message": f"NVD rate-limited after {MAX_RETRIES} retries (HTTP 429). Try again later.",
+            "rate_limit": rate_limit,
+            "http_status": 429,
+        }
+        write_health(payload)
+        print("[check_key] rate-limited after retries")
+        return 6
+
     if resp.status_code != 200:
         payload["key"] = {
             "status": "error",
-            "message": f"Unexpected HTTP {resp.status_code} from NVD.",
+            "message": f"Unexpected HTTP {resp.status_code} from NVD after {MAX_RETRIES} retries.",
             "rate_limit": rate_limit,
             "http_status": resp.status_code,
         }
@@ -134,9 +145,8 @@ def main() -> int:
         print(f"[check_key] unexpected status {resp.status_code}")
         return 5
 
-    # 200 OK - confirm body shape and rate-limit ceiling
     try:
-        body = resp.json()
+        body  = resp.json()
         total = body.get("totalResults")
     except Exception:
         total = None
@@ -145,7 +155,7 @@ def main() -> int:
     if rate_limit:
         msg_parts.append(f"Rate limit: {rate_limit}/30s.")
         if rate_limit < 50:
-            msg_parts.append("(Public limit is 5 - your key may not be activated.)")
+            msg_parts.append("(Public limit — key may not be activated yet.)")
     if total is not None:
         msg_parts.append(f"NVD reports {total:,} total CVEs.")
 
