@@ -1,15 +1,15 @@
 {
-  "checked_at": "2026-06-07T07:10:38Z",
+  "checked_at": "2026-06-08T08:18:25Z",
   "key": {
     "status": "error",
-    "message": "Unexpected HTTP 404 from NVD.",
+    "message": "Unexpected HTTP 404 from NVD after 3 retries.",
     "rate_limit": null,
     "http_status": 404
   },
   "fetch": {
     "status": "skipped",
-    "ran_at": "2026-06-07T07:10:38Z",
+    "ran_at": "2026-06-08T08:18:25Z",
     "cve_count": 730,
-    "message": "Fetch skipped because the API key validation failed."
+    "message": "Fetch skipped: API key validation failed or NVD temporarily unreachable."
   }
 }
