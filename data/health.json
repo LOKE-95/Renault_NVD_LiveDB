@@ -1,14 +1,14 @@
 {
-  "checked_at": "2026-06-17T08:33:03Z",
+  "checked_at": "2026-06-18T08:14:45Z",
   "key": {
     "status": "error",
-    "message": "Unexpected HTTP 404 from NVD after 3 retries.",
+    "message": "Network error: HTTPSConnectionPool(host='services.nvd.nist.gov', port=443): Read timed out. (read timeout=20)",
     "rate_limit": null,
-    "http_status": 404
+    "http_status": null
   },
   "fetch": {
     "status": "skipped",
-    "ran_at": "2026-06-17T08:33:03Z",
+    "ran_at": "2026-06-18T08:15:14Z",
     "cve_count": 730,
     "message": "Fetch skipped: API key validation failed or NVD temporarily unreachable."
   }
